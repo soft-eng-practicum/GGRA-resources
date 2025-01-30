@@ -1,0 +1,119 @@
+﻿body {
+    font-size: 16px;
+}
+
+h1 {
+    color: #024985;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+}
+
+li {
+    margin-left: -15px;
+    list-style-image: url("https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1676-religious-kneeling_4x.png&highlight=ff000000,006064&scale=0.5")
+}
+
+.classCategoryName {
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.classCategory {
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.classCategoryImage{
+    float: left;
+}
+
+/*.classCategory > div {
+        font-weight: normal
+    }
+*/
+
+.partners {
+    color: #0C7491;
+    margin-top: 10px;
+    margin-left: 30px;
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+    .partners:hover {
+        cursor: pointer;
+        color: #024985;
+    }
+
+h2 {
+    color: #024985;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+}
+
+.partnerInfo {
+    font-weight: 600;
+}
+
+.classOrganizationDetails {
+    padding: 15px 10px 15px 10px;
+}
+
+    .classOrganizationDetails button {
+        background-color: #94CECF;
+        font-weight: 400;
+    }
+
+#content {
+    display: flex;
+}
+
+#masterDiv {
+    border-right: solid #024985 2px;
+    background-color: #f8f8ff;
+    overflow-y: scroll;
+    flex: 1;
+    min-width: 300px;
+    box-shadow: 5px 0px 5px rgba(0, 0, 0, .25);
+    z-index: 1;
+    height: 100vh;
+}
+
+    #masterDiv::-webkit-scrollbar {
+        width: .5em;
+    }
+
+    #masterDiv::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    }
+
+    #masterDiv::-webkit-scrollbar-thumb {
+        background-color: #0C7491;
+    }
+
+    #masterDiv::-webkit-scrollbar-track {
+        background-color: #f8f8ff;
+    }
+
+#map {
+    flex: 4;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto','Arial';
+}
+
+
+
+
+/*MEDIA QUERIES*/
+@media only screen and (max-width: 768px) and (min-width: 481px) {
+}
+
+@media only screen and (max-width: 480px) {
+}
