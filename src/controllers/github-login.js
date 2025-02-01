@@ -1,4 +1,43 @@
-require('dotenv').config({path: '../../.env'})
+const dotenv = require('dotenv')
+dotenv.config()
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const express = require('express')
+const axios = require('axios')
+const router = express.Router()
+
+const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_SECRET = process.env.CLIENT_SECRET
+
+router.get('/auth/github/', (req, res) => {
+  const authUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
+  res.json({ url: authUrl })
+})
+
+router.get('/github/callback', async (req, res) => {
+  const code = req.query.code
+
+  try {
+    const tokenResponse = await axios.post(
+      'https://github.com/login/oauth/access_token',
+      {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        code,
+      },
+      { headers: { Accept: 'application/json' } },
+    )
+
+    const accessToken = tokenResponse.data.access_token
+    res.send(
+      `Successfully authorized! Got code ${code} and exchanged it for a user access token ending in ${accessToken.slice(-9)}`,
+    )
+  } catch (error) {
+    console.error(
+      'Error during OAuth process:',
+      error.response?.data || error.message,
+    )
+    res.status(500).send('Authentication failed')
+  }
+})
+
+module.exports = router

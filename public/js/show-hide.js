@@ -247,7 +247,7 @@ function newAddCategoryDiv(catId) {
     const buttonDiv = addDivToElement(newDiv, dataCategories[target].type, "name" + dataCategories[target].catId, "classCategoryName");
 
     const imageExpand = document.createElement("IMG");
-    imageExpand.src = "img/Larks/arrow-collapse-downB.png";
+    imageExpand.src = "public/img/Larks/arrow-collapse-downB.png";
     imageExpand.setAttribute("id", "button" + dataCategories[target].catId);
     imageExpand.setAttribute("class", "classCategoryImage");
     newDiv.prepend(imageExpand);
@@ -409,14 +409,14 @@ function showHideCategory(elementClass) {
 
     if (document.getElementsByClassName(elementClass)[0].style.display === "none") {
         for (let el of document.querySelectorAll("." + elementClass)) el.style.display = "block";
-        document.getElementById("button" + catId).src = "img/Larks/arrow-collapse-upB.png";
+        document.getElementById("button" + catId).src = "public/img/Larks/arrow-collapse-upB.png";
         myMap = map;
 
         categoryOpen.push(catId);
     } else {
         for (let el of document.querySelectorAll("." + elementClass)) el.style.display = "none";
-        document.getElementById("button" + catId).src = "img/Larks/arrow-collapse-downB.png";
-        myMap = null;
+        document.getElementById("button" + catId).src = "public/img/Larks/arrow-collapse-downB.png";
+        myMap = null
 
         for (let i = 0; i < categoryOpen.length; i++) {
             if (categoryOpen[i] == catId) {
