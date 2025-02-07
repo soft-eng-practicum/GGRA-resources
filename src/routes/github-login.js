@@ -5,12 +5,19 @@ const express = require('express')
 const axios = require('axios')
 const router = express.Router()
 
-const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_ID = undefined
 const CLIENT_SECRET = process.env.CLIENT_SECRET
 
-router.get('/auth/github/', (req, res) => {
-  const authUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
-  res.json({ url: authUrl })
+router.get('/auth/github', (req, res) => {
+  if (CLIENT_ID) {
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
+    res.json({ url: authUrl })
+  } else {
+    res.json({ url: '/access-denied' })
+    console.error(
+      'Server Error: Could not find CLIENT_ID variable, please check integrity of secrets.',
+    )
+  }
 })
 
 router.get('/github/callback', async (req, res) => {
