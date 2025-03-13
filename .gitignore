@@ -1,0 +1,12 @@
+# DevEnv
+flake.nix
+flake.lock
+.direnv
+.devenv
+.envrc
+
+# Secret
+.env
+
+#Node Modules
+node_modules
