@@ -178,4 +178,4 @@ For more information, see https://radix-ui.com/primitives/docs/components/${s.do
           .animate-fade-slide {
             animation: fade-slide 0.3s ease-out forwards;
           }
-        `})]})}function yw(){return R.jsx(vu,{children:R.jsxs(Xc,{children:[R.jsx(S5,{path:"/",element:R.jsx(xw,{})}),R.jsx(S5,{path:"/admin",element:R.jsx(kw,{})})]})})}ec.createRoot(document.getElementById("root")).render(R.jsx(d1.StrictMode,{children:R.jsx(yw,{})}));
+        `})]})}function yw(){return R.jsx(vu,{children:R.jsxs(Xc,{children:[R.jsx(S5,{path:"/GGRA-resources/",element:R.jsx(xw,{})}),R.jsx(S5,{path:"/GGRA-resources/admin",element:R.jsx(kw,{})})]})})}ec.createRoot(document.getElementById("root")).render(R.jsx(d1.StrictMode,{children:R.jsx(yw,{})}));
