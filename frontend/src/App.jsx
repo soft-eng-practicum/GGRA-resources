@@ -7,8 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<IndexMap/>} />
-        <Route path="/admin" element={<DynamicList />} />
+        <Route path="/GGRA-resources/" element={<IndexMap/>} />
+        <Route path="/GGRA-resources/admin" element={<DynamicList />} />
       </Routes>
     </BrowserRouter>
   )

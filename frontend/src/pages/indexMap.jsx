@@ -8,8 +8,8 @@ function IndexMap() {
   useEffect(() => {
     const fetchJson = async () => {
       try {
-        const resProviders = await fetch('/ggra-providers.json')
-        const resCategories = await fetch('/ggra-categories.json')
+        const resProviders = await fetch('/GGRA-resources/ggra-providers.json')
+        const resCategories = await fetch('/GGRA-resources/ggra-categories.json')
 
         if (!resProviders.ok || !resCategories.ok) {
           throw new Error('Failed to fetch data')
