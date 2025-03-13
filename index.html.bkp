@@ -11,6 +11,7 @@
       async
       defer
     ></script>
+    <script type="module" src="/src/main.jsx"></script>
     <link href="public/css/map.css" type="text/css" rel="stylesheet" />
     <link
       rel="stylesheet"

@@ -2,15 +2,17 @@ const express = require('express')
 const path = require('path')
 const React = require('react')
 const ReactDOMServer = require('react-dom/server')
+
 const app = express()
 
 app.use(express.static(path.join(__dirname)))
+app.use(express.static(path.join(__dirname, "build")))
 app.use(express.static('public'))
 
 const gitLoginRouter = require('./src/routes/github-login')
 app.use('/', gitLoginRouter)
 
-const forbidden403 = require('./src/components/forbidden-403').default
+const forbidden403 = require('./src/pages/forbidden-403.jsx').default
 
 app.get('/access-denied', (req, res) => {
   const forbiddenPage = ReactDOMServer.renderToString(

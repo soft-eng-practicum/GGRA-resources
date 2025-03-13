@@ -5,7 +5,7 @@ const express = require('express')
 const axios = require('axios')
 const router = express.Router()
 
-const CLIENT_ID = undefined
+const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
 
 router.get('/auth/github', (req, res) => {
