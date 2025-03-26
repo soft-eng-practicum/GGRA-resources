@@ -1,31 +1,21 @@
 import { useState, useEffect } from 'react'
-import { ResourceDialog } from '@/components'
-import { ResourceCard } from '@/components'
+import { ResourceDialog, ResourceCard } from '@/components'
+import { Button } from '@/components/ui/button'
 
 function DynamicList() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
   return (
-    <div className="flex h-screen p-6">
-      <div className="flex justify-center items-center transition-all duration-300">
+    <div className="flex flex-row h-screen p-6 align-middle items-center">
+      <div className="flex flex-col border-1 shadow-lg rounded-lg p-6">
         <ResourceCard />
+        <Button
+          onClick={() => setIsDialogOpen(true)}
+          className="mt-4 w-full bg-gray-100 text-green-300 text-3xl shadow-lg font-bold border-none hover:bg-gray-300"
+        >
+          +
+        </Button>
       </div>
-      <ResourceDialog />
-      <style>
-        {`
-          @keyframes fade-slide {
-            from {
-              opacity: 0;
-              transform: translateY(100px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          .animate-fade-slide {
-            animation: fade-slide 0.3s ease-out forwards;
-          }
-        `}
-      </style>
     </div>
   )
 }

@@ -20,10 +20,8 @@ function ResourceCard() {
     latitude: '',
   })
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-
   useEffect(() => {
-    fetch('http://localhost:3000/public/ggra-providers.json') // Update with your actual API URL
+    fetch('/GGRA-resources/ggra-providers.json')
       .then((response) => response.json())
       .then((data) =>
         setItems(
@@ -47,13 +45,12 @@ function ResourceCard() {
       )
   }, [])
 
-
   const removeItem = (index) => {
     setItems(items.filter((_, i) => i !== index))
   }
 
   return (
-    <Card className="w-[600px] p-6 shadow-lg rounded-lg border mx-auto">
+    <Card className="w-3xl h-[80vh] overflow-y-auto border-none px-6 shadow-none mx-auto">
       <CardContent>
         <ul className="space-y-4">
           {items.map((item, index) => (
@@ -84,12 +81,6 @@ function ResourceCard() {
             </li>
           ))}
         </ul>
-        <Button
-          onClick={() => setIsDialogOpen(true)}
-          className="mt-4 w-full bg-gray-100 text-green-300 text-3xl font-bold border-none hover:bg-gray-300"
-        >
-          +
-        </Button>
       </CardContent>
     </Card>
   )
