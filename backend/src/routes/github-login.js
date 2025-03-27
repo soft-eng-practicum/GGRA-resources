@@ -1,30 +1,24 @@
-const dotenv = require('dotenv')
-dotenv.config()
+import express from 'express'
+import axios from 'axios'
+import { Octokit } from '@octokit/rest'
 
-const express = require('express')
-const axios = require('axios')
 const router = express.Router()
 
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
+const TARGET_REPO = process.env.TARGET_REPO
 
+// Redirect to GitHub OAuth
 router.get('/auth/github', (req, res) => {
-  if (CLIENT_ID) {
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`
-    res.json({ url: authUrl })
-  } else {
-    res.json({ url: '/access-denied' })
-    console.error(
-      'Server Error: Could not find CLIENT_ID variable, please check integrity of secrets.',
-    )
-  }
+  const redirectUri = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=repo`
+  res.redirect(redirectUri)
 })
 
+// GitHub OAuth callback
 router.get('/github/callback', async (req, res) => {
   const code = req.query.code
-
   try {
-    const tokenResponse = await axios.post(
+    const tokenRes = await axios.post(
       'https://github.com/login/oauth/access_token',
       {
         client_id: CLIENT_ID,
@@ -34,17 +28,45 @@ router.get('/github/callback', async (req, res) => {
       { headers: { Accept: 'application/json' } },
     )
 
-    const accessToken = tokenResponse.data.access_token
-    res.send(
-      `Successfully authorized! Got code ${code} and exchanged it for a user access token ending in ${accessToken.slice(-9)}`,
+    const accessToken = tokenRes.data.access_token
+    if (!accessToken) throw new Error('No access token received.')
+
+    console.log(accessToken)
+
+    const octokit = new Octokit({ auth: accessToken })
+
+    const { data: user } = await octokit.request('GET /user', {
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    })
+
+    console.log(user.login)
+
+    // Check if the user has access to the repo
+    const response = await octokit.request(
+      'GET /repos/{owner}/{repo}/collaborators/{username}/permission',
+      {
+        owner: 'soft-eng-practicum',
+        repo: 'GGRA-resources',
+        username: 'jankaltenegger',
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      },
     )
-  } catch (error) {
-    console.error(
-      'Error during OAuth process:',
-      error.response?.data || error.message,
-    )
-    res.status(500).send('Authentication failed')
+
+    console.log(response)
+
+    req.session.authenticated = true
+    req.session.accessToken = accessToken
+    req.session.username = user.login
+
+    res.redirect('http://localhost:5173/GGRA-resources/admin')
+  } catch (err) {
+    console.error('OAuth error:', err.message)
+    res.status(403).send('Access denied or repository not accessible.')
   }
 })
 
-module.exports = router
+export default router

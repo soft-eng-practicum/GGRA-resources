@@ -1,40 +1,57 @@
-const express = require('express')
-const path = require('path')
-const React = require('react')
-const ReactDOMServer = require('react-dom/server')
+import 'dotenv/config'
+import express from 'express'
+import session from 'express-session'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import cors from 'cors'
+
+import gitLoginRouter from './src/routes/github-login.js'
 
 const app = express()
+const PORT = 3000
 
-app.use(express.static(path.join(__dirname)))
-app.use(express.static(path.join(__dirname, "build")))
-app.use(express.static('public'))
+// CORS to allow frontend communication
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173/GGRA-resources/',
+      'https://.github.io/GGRA-resources/',
+    ],
+    credentials: true,
+  }),
+)
 
-const gitLoginRouter = require('./src/routes/github-login')
+// Session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'dev-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // Set to true in production with HTTPS
+  }),
+)
+
+// Static files (optional if needed for assets)
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+app.use(express.static(path.join(__dirname, 'public')))
+
+// GitHub OAuth routes
 app.use('/', gitLoginRouter)
 
-const forbidden403 = require('./src/pages/forbidden-403.jsx').default
+// Auth check endpoint for React frontend
+app.get('/api/check-auth', (req, res) => {
+  res.json({ authenticated: !!req.session.authenticated })
+})
 
+// Route for failed login or denied repo access
 app.get('/access-denied', (req, res) => {
-  const forbiddenPage = ReactDOMServer.renderToString(
-    React.createElement(forbidden403),
-  )
-  res.status(403).send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>403 Forbidden</title>
-        <style>
-            body { font-family: Arial, sans-serif; text-align: center; padding: 50px; color: #721c24; }
-            .container { max-width: 600px; margin: auto; padding: 20px; border-radius: 10px; background: #f8d7da; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
-        </style>
-    </head>
-    <body>
-        <div class="container">${forbiddenPage}</div>
-    </body>
-    </html>
-  `)
+  const isDev = process.env.NODE_ENV !== 'production'
+  const redirectURL = isDev
+    ? 'http://localhost:5173/GGRA-resources/forbidden'
+    : 'https://your-github-username.github.io/GGRA-resources/forbidden'
+
+  res.redirect(redirectURL)
 })
 
 app.listen(3000)
