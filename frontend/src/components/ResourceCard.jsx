@@ -50,28 +50,34 @@ function ResourceCard() {
   }
 
   return (
-    <Card className="w-3xl h-[80vh] overflow-y-auto border-none px-6 shadow-none mx-auto">
+    <Card className="w-[50vw] h-[80vh] overflow-y-auto border-none px-6 shadow-none mx-auto">
       <CardContent>
         <ul className="space-y-4">
           {items.map((item, index) => (
             <li
               key={index}
-              className="relative flex flex-col p-4 border rounded w-full"
+              className="bg-white relative flex flex-col p-4 border rounded w-full"
             >
               <span className="font-bold text-lg">{item.name}</span>
+              <br />
               <span className="text-sm text-gray-500">{item.description}</span>
+              <br />
               <span className="text-sm text-gray-500">
                 {item.street}, {item.city}, {item.state} {item.zip}
               </span>
+              <br />
               <span className="text-sm text-gray-500">
                 Phone: {item.phone} | Email: {item.email}
               </span>
+              <br />
               <span className="text-sm text-gray-500">
                 Website: {item.website}
               </span>
+              <br />
               <span className="text-sm text-gray-500">
                 Coordinates: {item.latitude}, {item.longitude}
               </span>
+              <br />
               <button
                 onClick={() => removeItem(index)}
                 className="absolute right-[-40px] top-1/2 transform -translate-y-1/2 text-red-300 text-2xl font-bold"

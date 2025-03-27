@@ -1,3 +1,8 @@
+import React, { useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
 import {
   Card,
   CardContent,
@@ -5,65 +10,176 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
-function ResourceDialog(props) {
-  const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState({ name: "", description: "", street: "", city: "", state: "", zip: "", phone: "", email: "", website: "", longitude: "", latitude: "" });
+const formSchema = z.object({
+  name: z.string().min(2).max(50),
+  description: z.string(),
+  street: z.string(),
+  city: z.string(),
+  state: z.string(),
+  zip: z.string(),
+  phone: z.string(),
+  website: z.string(),
+  email: z.string(),
+  lng: z.string(),
+  lat: z.string(),
+})
 
-  const addItem = () => {
-    if (newItem.name.trim()) {
-      setItems([...items, newItem])
-      setNewItem({
-        name: '',
-        description: '',
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
-        phone: '',
-        email: '',
-        website: '',
-        longitude: '',
-        latitude: '',
-      })
-      setIsDialogOpen(false)
-    }
+function GGRAFormField(props) {
+  return (
+    <FormField
+      control={props.form}
+      name={props.name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{props.labelName}</FormLabel>
+          <FormControl>
+            {!props.textarea ? (
+              <Input placeholder={props.placeholder} {...field} />
+            ) : (
+              <Textarea placeholder={props.placeholder} {...field} />
+            )}
+          </FormControl>
+          {props.description && (
+            <FormDescription>{props.description}</FormDescription>
+          )}
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+function ResourceDialog() {
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      description: '',
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+      phone: '',
+      website: '',
+      email: '',
+      lng: '',
+      lat: '',
+    },
+  })
+
+  function onSubmit(values) {
+    console.log(values)
   }
 
   return (
-    <Card>
+    <Card className="ml-3 h-[90vh] w-[40vw] overflow-y-scroll">
       <CardHeader>
         <CardTitle>Add Resource Location</CardTitle>
+        <CardDescription>Placeholder</CardDescription>
       </CardHeader>
-      <CardContent
-        className="transition-all duration-300 ease-out opacity-0 translate-y-10 bg-white shadow-lg border rounded-lg p-6 animate-fade-slide"
-      >
-        {Object.keys(newItem).map((key) => (
-          <Input
-            key={key}
-            type="text"
-            value={newItem[key]}
-            onChange={(e) =>
-              setNewItem({ ...newItem, [key]: e.target.value })
-            }
-            placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
-            className="mt-2 w-full"
-          />
-        ))}
-        <Button onClick={addItem} className="mt-2 w-full">
-          Add
-        </Button>
-        <Button
-          onClick={() => setIsDialogOpen(false)}
-          className="mt-2 w-full"
-        >
-          Cancel
-        </Button>
+      <CardContent>
+        <Form {...form}>
+          <form id="resourceForm" onSubmit={form.handleSubmit(onSubmit)}>
+            <GGRAFormField
+              form={form.control}
+              name="name"
+              labelName="Name"
+              placeholder="test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="description"
+              textarea={true}
+              labelName="Description"
+              placeholder="Test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="street"
+              labelName="Street Address"
+              placeholder="Test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="city"
+              labelName="City"
+              placeholder="Test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="state"
+              labelName="State"
+              placeholder="Test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="zip"
+              labelName="Zip Code"
+              placeholder="Test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="phone"
+              labelName="Phone Number"
+              placeholder="Test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="website"
+              labelName="Website"
+              placeholder="Test"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="email"
+              labelName="E-Mail"
+              placeholder="test@example.com"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="lng"
+              labelName="Longitude"
+              placeholder="-12.1234"
+            />
+            <br />
+            <GGRAFormField
+              form={form.control}
+              name="lat"
+              labelName="Latitude"
+              placeholder="43.4321"
+            />
+            <br />
+          </form>
+        </Form>
       </CardContent>
+      <CardFooter>
+        <Button type="submit" form="resourceForm">
+          Submit
+        </Button>
+      </CardFooter>
     </Card>
   )
 }
