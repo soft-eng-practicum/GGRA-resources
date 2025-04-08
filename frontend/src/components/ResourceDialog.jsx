@@ -86,12 +86,12 @@ function ResourceDialog() {
   }
 
   return (
-    <Card className="ml-3 w-1/3 h-[90vh] overflow-y-auto bg-gray-50">
+    <Card className="border-none shadow-none rounded-none w-full overflow-y-scroll">
       <CardHeader>
         <CardTitle>Add Resource Location</CardTitle>
         <CardDescription>Placeholder</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="overflow-y-auto">
         <Form {...form}>
           <form id="resourceForm" onSubmit={form.handleSubmit(onSubmit)}>
             <GGRAFormField
@@ -175,11 +175,6 @@ function ResourceDialog() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter>
-        <Button type="submit" form="resourceForm" className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg">
-          Submit
-        </Button>
-      </CardFooter>
     </Card>
   )
 }
