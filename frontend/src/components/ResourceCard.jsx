@@ -50,7 +50,7 @@ function ResourceCard() {
   }
 
   return (
-    <Card className="w-[50vw] h-[80vh] overflow-y-auto border-none px-6 shadow-none mx-auto">
+    <Card className="overflow-y-auto border-none px-6 shadow-none mx-auto">
       <CardContent>
         <ul className="space-y-4">
           {items.map((item, index) => (
@@ -58,25 +58,38 @@ function ResourceCard() {
               key={index}
               className="bg-white relative flex flex-col p-4 border rounded w-full"
             >
-              <span className="font-bold text-lg">{item.name}</span>
+              <p className="font-bold text-lg">
+                {item.name}
+                <br />
+              </p>
               <br />
-              <span className="text-sm text-gray-500">{item.description}</span>
-              <br />
-              <span className="text-sm text-gray-500">
-                {item.street}, {item.city}, {item.state} {item.zip}
-              </span>
-              <br />
-              <span className="text-sm text-gray-500">
-                Phone: {item.phone} | Email: {item.email}
-              </span>
-              <br />
-              <span className="text-sm text-gray-500">
-                Website: {item.website}
-              </span>
-              <br />
-              <span className="text-sm text-gray-500">
-                Coordinates: {item.latitude}, {item.longitude}
-              </span>
+              <p className="text-sm text-gray-500">
+                {item.description}
+                <br />
+                <br />
+              </p>
+              <p className="text-sm text-gray-500">
+                <span className="font-bold">
+                  {item.street}, {item.city}, {item.state} {item.zip}
+                </span>
+                <br />
+                <br />
+              </p>
+              <p className="text-sm text-gray-500">
+                <span className="font-bold">Phone:</span> {item.phone} | Email:{' '}
+                {item.email}
+                <br />
+                <br />
+              </p>
+              <p className="text-sm text-gray-500">
+                <span className="font-bold">Website:</span> {item.website}
+                <br />
+                <br />
+              </p>
+              <p className="text-sm text-gray-500">
+                <span className="font-bold">Coordinates:</span> {item.latitude},{' '}
+                {item.longitude}
+              </p>
               <br />
               <button
                 onClick={() => removeItem(index)}

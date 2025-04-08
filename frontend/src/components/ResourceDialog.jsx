@@ -45,7 +45,7 @@ function GGRAFormField(props) {
       name={props.name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{props.labelName}</FormLabel>
+          <FormLabel className="text-md">{props.labelName}</FormLabel>
           <FormControl>
             {!props.textarea ? (
               <Input placeholder={props.placeholder} {...field} />
@@ -86,7 +86,7 @@ function ResourceDialog() {
   }
 
   return (
-    <Card className="ml-3 h-[90vh] w-[40vw] overflow-y-scroll">
+    <Card className="ml-3 w-1/3 h-[90vh] overflow-y-auto bg-gray-50">
       <CardHeader>
         <CardTitle>Add Resource Location</CardTitle>
         <CardDescription>Placeholder</CardDescription>
@@ -176,7 +176,7 @@ function ResourceDialog() {
         </Form>
       </CardContent>
       <CardFooter>
-        <Button type="submit" form="resourceForm">
+        <Button type="submit" form="resourceForm" className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg">
           Submit
         </Button>
       </CardFooter>

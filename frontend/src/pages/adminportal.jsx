@@ -6,17 +6,17 @@ function DynamicList() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
-    <div className="flex flex-row h-screen p-6 align-middle items-center">
-      <div className="flex flex-col border-1 shadow-lg rounded-lg p-6 bg-gray-50">
+    <div className="flex flex-row h-screen w-full p-6 items-center align-middle justify-center gap-4">
+      <div className="flex flex-col h-[90vh] w-2/3 border-1 shadow-lg rounded-lg px-6 pt-6 bg-gray-50">
         <ResourceCard className="bg-white" />
         <Button
           onClick={() => setIsDialogOpen(true)}
-          className="mt-4 w-full bg-gray-100 text-green-300 text-3xl shadow-lg font-bold border border-gray-200 hover:bg-gray-300"
+          className="my-4 py-5 bg-gray-200 text-green-300 text-3xl shadow-lg font-bold border border-gray-300 hover:bg-gray-300"
         >
           +
         </Button>
       </div>
-      <ResourceDialog />
+      <ResourceDialog className="w-1/3" />
     </div>
   )
 }

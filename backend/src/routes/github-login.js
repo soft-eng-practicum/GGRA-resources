@@ -29,8 +29,6 @@ router.get('/github/callback', async (req, res) => {
     const accessToken = tokenRes.data.access_token
     if (!accessToken) throw new Error('No access token received.')
 
-    console.log(accessToken)
-
     const octokit = new Octokit({ auth: accessToken })
 
     const { data: user } = await octokit.request('GET /user', {
@@ -38,8 +36,6 @@ router.get('/github/callback', async (req, res) => {
         'X-GitHub-Api-Version': '2022-11-28',
       },
     })
-
-    console.log(user.login)
 
     // Check if the user has access to the repo
     const { data: permissionData } = await octokit.request(
