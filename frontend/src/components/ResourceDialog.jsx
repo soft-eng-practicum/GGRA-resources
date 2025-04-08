@@ -98,7 +98,7 @@ function ResourceDialog() {
               form={form.control}
               name="name"
               labelName="Name"
-              placeholder="test"
+              placeholder="Example Resource"
             />
             <br />
             <GGRAFormField
@@ -106,56 +106,56 @@ function ResourceDialog() {
               name="description"
               textarea={true}
               labelName="Description"
-              placeholder="Test"
+              placeholder="Enter description"
             />
             <br />
             <GGRAFormField
               form={form.control}
               name="street"
               labelName="Street Address"
-              placeholder="Test"
+              placeholder="1234 Nonesuch Road"
             />
             <br />
             <GGRAFormField
               form={form.control}
               name="city"
               labelName="City"
-              placeholder="Test"
+              placeholder="Anytown"
             />
             <br />
             <GGRAFormField
               form={form.control}
               name="state"
               labelName="State"
-              placeholder="Test"
+              placeholder="GA"
             />
             <br />
             <GGRAFormField
               form={form.control}
               name="zip"
               labelName="Zip Code"
-              placeholder="Test"
+              placeholder="12345"
             />
             <br />
             <GGRAFormField
               form={form.control}
               name="phone"
               labelName="Phone Number"
-              placeholder="Test"
+              placeholder="(123) 123-1234"
             />
             <br />
             <GGRAFormField
               form={form.control}
               name="website"
               labelName="Website"
-              placeholder="Test"
+              placeholder="https://example.com"
             />
             <br />
             <GGRAFormField
               form={form.control}
               name="email"
               labelName="E-Mail"
-              placeholder="test@example.com"
+              placeholder="placeholder@example.com"
             />
             <br />
             <GGRAFormField
