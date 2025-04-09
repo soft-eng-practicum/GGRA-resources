@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter,
+  SheetTrigger,
+  SheetClose,
+} from '@/components/ui/sheet'
 import {
   Form,
   FormControl,
@@ -83,15 +84,22 @@ function ResourceDialog() {
 
   function onSubmit(values) {
     console.log(values)
+    closeRef.current?.click()
   }
 
   return (
-    <Card className="border-none shadow-none rounded-none w-full overflow-y-scroll">
-      <CardHeader>
-        <CardTitle>Add Resource Location</CardTitle>
-        <CardDescription>Placeholder</CardDescription>
-      </CardHeader>
-      <CardContent className="overflow-y-auto">
+    <Sheet>
+      <SheetTrigger className="m-4 rounded-lg bg-gray-200 text-green-300 text-3xl shadow-lg font-bold border border-gray-300 hover:bg-gray-300">
+        +
+      </SheetTrigger>
+      <SheetContent className="bg-gray-50 overflow-y-scroll px-5">
+        <SheetHeader className="px-0">
+          <SheetTitle>Add new resource</SheetTitle>
+          <SheetDescription>
+            Enter the information for the new resource. Press Submit once you
+            are done.
+          </SheetDescription>
+        </SheetHeader>
         <Form {...form}>
           <form id="resourceForm" onSubmit={form.handleSubmit(onSubmit)}>
             <GGRAFormField
@@ -174,8 +182,17 @@ function ResourceDialog() {
             <br />
           </form>
         </Form>
-      </CardContent>
-    </Card>
+        <SheetFooter>
+          <Button
+            type="submit"
+            form="resourceForm"
+            className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5"
+          >
+            Submit
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   )
 }
 
