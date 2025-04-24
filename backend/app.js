@@ -21,7 +21,7 @@ app.use(
   }),
 )
 
-app.use(express.json());
+app.use(express.json())
 
 // Session middleware
 app.use(
