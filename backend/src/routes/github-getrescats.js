@@ -9,8 +9,8 @@ router.get('/api/getResources', async (req, res) => {
     const octokit = new Octokit({ auth: userToken })
 
     const [owner, repo] = process.env.TARGET_REPO.split('/')
-    const filePath = 'public/ggra-providers.json'
-    const branch = 'main'
+    const filePath = 'ggra-providers.json'
+    const branch = 'storagebranch'
 
     const { data: file } = await octokit.repos.getContent({
       owner,

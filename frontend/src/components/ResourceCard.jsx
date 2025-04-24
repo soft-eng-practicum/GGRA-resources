@@ -20,33 +20,47 @@ function ResourceCard() {
     latitude: '',
   })
 
-useEffect(() => {
-  fetch('http://localhost:3000/api/getResources')
-    .then((res) => {
-      if (!res.ok) throw new Error(res.statusText)
-      return res.json()
-    })
-    .then((payload) => {
-      const list = JSON.parse(payload.content)
+  useEffect(() => {
+    // Polls every 30 seconds to check if any new changes have been made to ggra-providers.json
+    const fetchResources = () => {
+      fetch('http://localhost:3000/api/getResources')
+        .then((res) => {
+          if (!res.ok) throw new Error(res.statusText)
+          return res.json()
+        })
+        .then((payload) => {
+          const list = JSON.parse(payload.content)
 
-      setItems(
-        list.map((item) => ({
-          name:        item.name,
-          description: item.description,
-          street:      item.street,
-          city:        item.city,
-          state:       item.state,
-          zip:         item.zip,
-          phone:       item.phone,
-          email:       item.email,
-          website:     item.website,
-          longitude:   item.lng,
-          latitude:    item.lat,
-        }))
-      )
-    })
-    .catch((err) => console.error('Error fetching resource locations:', err))
-}, [])
+          setItems(
+            list.map((item) => ({
+              name: item.name,
+              description: item.description,
+              street: item.street,
+              city: item.city,
+              state: item.state,
+              zip: item.zip,
+              phone: item.phone,
+              email: item.email,
+              website: item.website,
+              longitude: item.lng,
+              latitude: item.lat,
+            })),
+          )
+        })
+        .catch((err) =>
+          console.error('Error fetching resource locations:', err),
+        )
+    }
+
+    // initial load
+    fetchResources()
+
+    // poll every 30 seconds
+    const intervalId = setInterval(fetchResources, 30_000)
+
+    // cleanup on unmount
+    return () => clearInterval(intervalId)
+  }, [])
 
   const removeItem = (index) => {
     setItems(items.filter((_, i) => i !== index))
