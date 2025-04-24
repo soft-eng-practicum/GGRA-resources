@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { ResourceDialog } from '@/components'
 
-function ResourceCard() {
+function ResourceCardProviders() {
   const [items, setItems] = useState([])
 
   const [newItem, setNewItem] = useState({
@@ -21,9 +19,9 @@ function ResourceCard() {
   })
 
   useEffect(() => {
-    // Polls every 30 seconds to check if any new changes have been made to ggra-providers.json
+    // Polls every 120 seconds to check if any new changes have been made to ggra-providers.json
     const fetchResources = () => {
-      fetch('http://localhost:3000/api/getResources')
+      fetch('http://localhost:3000/api/getProviders')
         .then((res) => {
           if (!res.ok) throw new Error(res.statusText)
           return res.json()
@@ -55,8 +53,8 @@ function ResourceCard() {
     // initial load
     fetchResources()
 
-    // poll every 30 seconds
-    const intervalId = setInterval(fetchResources, 30_000)
+    // poll every 120 seconds
+    const intervalId = setInterval(fetchResources, 120_000)
 
     // cleanup on unmount
     return () => clearInterval(intervalId)
@@ -68,7 +66,7 @@ function ResourceCard() {
 
   return (
     <Card className="overflow-y-auto border-none px-6 shadow-none mx-auto">
-      <CardContent>
+      <CardContent className="mb-20">
         <ul className="space-y-4">
           {items.map((item, index) => (
             <li
@@ -122,4 +120,4 @@ function ResourceCard() {
   )
 }
 
-export default ResourceCard
+export default ResourceCardProviders

@@ -95,7 +95,7 @@ function GGRAFormField({
   )
 }
 
-function ResourceDialog() {
+function ResourceDialogProviders() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -153,7 +153,7 @@ function ResourceDialog() {
 
   return (
     <Sheet>
-      <SheetTrigger className="m-4 rounded-lg bg-gray-200 text-green-300 text-3xl shadow-lg font-bold border border-gray-300 hover:bg-gray-300">
+      <SheetTrigger className="m-4 absolute bottom-0 left-0 right-0 rounded-lg bg-gray-200 text-green-300 text-3xl shadow-lg font-bold border border-gray-300 hover:bg-gray-300">
         +
       </SheetTrigger>
       <SheetContent className="bg-gray-50">
@@ -318,4 +318,4 @@ function ResourceDialog() {
   )
 }
 
-export default ResourceDialog
+export default ResourceDialogProviders
