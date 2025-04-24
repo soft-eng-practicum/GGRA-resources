@@ -232,5 +232,23 @@
     "lat": "11",
     "uploadedPhoto": null,
     "cat": null
+  },
+  {
+    "id": 35,
+    "catId": 1,
+    "name": "test",
+    "description": "",
+    "street": "",
+    "city": "",
+    "state": "",
+    "zip": "",
+    "phone": "",
+    "website": "",
+    "email": "",
+    "photo": null,
+    "lng": "11",
+    "lat": "11",
+    "uploadedPhoto": null,
+    "cat": null
   }
 ]
