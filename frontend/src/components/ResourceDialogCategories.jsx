@@ -23,42 +23,17 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
-const validCategoryIDs = [1, 2, 4, 5, 6, 7, 8, 9, 11]
-
 const formSchema = z.object({
-  catId: z.coerce
-    .number({
-      invalid_type_error: 'Category is required',
-    })
-    .refine((val) => validCategoryIDs.includes(val), {
-      message: 'Invalid category selected',
-    }),
-  name: z
+  catId: z.string().min(1),
+  type: z
     .string()
     .min(2, 'Name should be more than 2 characters long')
     .max(50, 'Name should be less than 50 characters long'),
-  description: z.string(),
-  street: z.string(),
-  city: z.string(),
-  state: z.string(),
-  zip: z.string(),
-  phone: z.string(),
-  website: z.string(),
-  email: z.string(),
-  lng: z.string().min(1, 'Longitude is required'),
-  lat: z.string().min(1, 'Latitude is required'),
 })
 
 function GGRAFormField({
@@ -99,40 +74,16 @@ function ResourceDialogCategories() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      catId: undefined,
-      name: '',
-      description: '',
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
-      phone: '',
-      website: '',
-      email: '',
-      lng: '',
-      lat: '',
+      catId: '',
+      type: '',
     },
   })
 
   async function onSubmit(values) {
 
     const payload = {
-      id: null,
       catId: values.catId,
-      name: values.name,
-      description: values.description,
-      street: values.street,
-      city: values.city,
-      state: values.state,
-      zip: values.zip,
-      phone: values.phone,
-      website: values.website,
-      email: values.email,
-      photo: null,
-      lng: values.lng,
-      lat: values.lat,
-      uploadedPhoto: null,
-      cat: null,
+      type: values.type,
     }
 
     const res = await fetch('http://localhost:3000/api/resources', { //TODO: Change localhost to server URL once in prod
@@ -158,147 +109,29 @@ function ResourceDialogCategories() {
       </SheetTrigger>
       <SheetContent className="bg-gray-50">
         <SheetHeader>
-          <SheetTitle>Add new resource</SheetTitle>
+          <SheetTitle>Add new category</SheetTitle>
           <SheetDescription>
-            Enter the information for the new resource. Press Submit once you
+            Enter the information for the new category. Press Submit once you
             are done.
           </SheetDescription>
         </SheetHeader>
         <div className="overflow-y-scroll px-5">
           <Form {...form}>
-            <form id="resourceForm" onSubmit={form.handleSubmit(onSubmit)}>
-              <FormField
-                control={form.control}
+            <form id="categoryForm" onSubmit={form.handleSubmit(onSubmit)}>
+              <GGRAFormField
+                form={form.control}
                 name="catId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-md">
-                      Category<span className="text-red-600">*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="w-28"
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select the category this resouce belongs to" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-gray-50">
-                        <SelectItem value="1" className="hover:bg-gray-100">
-                          Mentoring Services
-                        </SelectItem>
-                        <SelectItem value="2" className="hover:bg-gray-100">
-                          Job Development
-                        </SelectItem>
-                        <SelectItem value="4" className="hover:bg-gray-100">
-                          Government Agencies
-                        </SelectItem>
-                        <SelectItem value="5" className="hover:bg-gray-100">
-                          Probation / Parole
-                        </SelectItem>
-                        <SelectItem value="6" className="hover:bg-gray-100">
-                          Housing Resources
-                        </SelectItem>
-                        <SelectItem value="7" className="hover:bg-gray-100">
-                          Education Mentoring
-                        </SelectItem>
-                        <SelectItem value="8" className="hover:bg-gray-100">
-                          Religious Organizations
-                        </SelectItem>
-                        <SelectItem value="9" className="hover:bg-gray-100">
-                          Healthcare / Recovery
-                        </SelectItem>
-                        <SelectItem value="11" className="hover:bg-gray-100">
-                          Transportation
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage className="text-red-600" />
-                  </FormItem>
-                )}
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="name"
-                labelName="Name"
+                labelName="CategoryID"
                 isRequired={true}
-                placeholder="Example Resource"
+                placeholder="9"
               />
               <br />
               <GGRAFormField
                 form={form.control}
-                name="description"
+                name="type"
                 textarea={true}
-                labelName="Description"
-                placeholder="Enter description"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="street"
-                labelName="Street Address"
-                placeholder="1234 Nonesuch Road"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="city"
-                labelName="City"
-                placeholder="Anytown"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="state"
-                labelName="State"
-                placeholder="GA"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="zip"
-                labelName="Zip Code"
-                placeholder="12345"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="phone"
-                labelName="Phone Number"
-                placeholder="(123) 123-1234"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="website"
-                labelName="Website"
-                placeholder="https://example.com"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="email"
-                labelName="E-Mail"
-                placeholder="placeholder@example.com"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="lng"
-                labelName="Longitude"
-                isRequired={true}
-                placeholder="-12.1234"
-              />
-              <br />
-              <GGRAFormField
-                form={form.control}
-                name="lat"
-                labelName="Latitude"
-                isRequired={true}
-                placeholder="43.4321"
+                labelName="Name"
+                placeholder="Enter Name"
               />
               <br />
             </form>
@@ -307,7 +140,7 @@ function ResourceDialogCategories() {
         <SheetFooter>
           <Button
             type="submit"
-            form="resourceForm"
+            form="categoryForm"
             className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5"
           >
             Submit
