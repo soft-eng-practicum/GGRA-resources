@@ -38,7 +38,7 @@ import { Textarea } from '@/components/ui/textarea'
 const validCategoryIDs = [1, 2, 4, 5, 6, 7, 8, 9, 11]
 
 const formSchema = z.object({
-  category: z.coerce
+  catId: z.coerce
     .number({
       invalid_type_error: 'Category is required',
     })
@@ -99,7 +99,7 @@ function ResourceDialog() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      category: undefined,
+      catId: undefined,
       name: '',
       description: '',
       street: '',
@@ -115,12 +115,33 @@ function ResourceDialog() {
   })
 
   async function onSubmit(values) {
+
+    const payload = {
+      id: null,
+      catId: values.catId,
+      name: values.name,
+      description: values.description,
+      street: values.street,
+      city: values.city,
+      state: values.state,
+      zip: values.zip,
+      phone: values.phone,
+      website: values.website,
+      email: values.email,
+      photo: null,
+      lng: values.lng,
+      lat: values.lat,
+      uploadedPhoto: null,
+      cat: null,
+    }
+
     const res = await fetch('http://localhost:3000/api/resources', { //TODO: Change localhost to server URL once in prod
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
+      body: JSON.stringify(payload),
     })
+
     if (res.ok) {
       //TODO: do something if push succeeds
     } else if (res.status === 409) {
@@ -148,7 +169,7 @@ function ResourceDialog() {
             <form id="resourceForm" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="category"
+                name="catId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-md">

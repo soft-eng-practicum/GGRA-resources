@@ -7,6 +7,7 @@ import cors from 'cors'
 
 import gitLoginRouter from './src/routes/github-login.js'
 import gitCommitRouter from './src/routes/github-commit.js'
+import gitGetResCatsRouter from './src/routes/github-getrescats.js'
 
 const app = express()
 
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', gitLoginRouter)
 
 app.use(gitCommitRouter)
+app.use(gitGetResCatsRouter)
 
 // Auth check endpoint for React frontend
 app.get('/api/check-auth', (req, res) => {

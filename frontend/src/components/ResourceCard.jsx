@@ -20,30 +20,33 @@ function ResourceCard() {
     latitude: '',
   })
 
-  useEffect(() => {
-    fetch('/GGRA-resources/ggra-providers.json')
-      .then((response) => response.json())
-      .then((data) =>
-        setItems(
-          data.map((item) => ({
-            name: item.name,
-            description: item.description,
-            street: item.street,
-            city: item.city,
-            state: item.state,
-            zip: item.zip,
-            phone: item.phone,
-            email: item.email,
-            website: item.website,
-            longitude: item.lng,
-            latitude: item.lat,
-          })),
-        ),
+useEffect(() => {
+  fetch('http://localhost:3000/api/getResources')
+    .then((res) => {
+      if (!res.ok) throw new Error(res.statusText)
+      return res.json()
+    })
+    .then((payload) => {
+      const list = JSON.parse(payload.content)
+
+      setItems(
+        list.map((item) => ({
+          name:        item.name,
+          description: item.description,
+          street:      item.street,
+          city:        item.city,
+          state:       item.state,
+          zip:         item.zip,
+          phone:       item.phone,
+          email:       item.email,
+          website:     item.website,
+          longitude:   item.lng,
+          latitude:    item.lat,
+        }))
       )
-      .catch((error) =>
-        console.error('Error fetching resource locations:', error),
-      )
-  }, [])
+    })
+    .catch((err) => console.error('Error fetching resource locations:', err))
+}, [])
 
   const removeItem = (index) => {
     setItems(items.filter((_, i) => i !== index))
