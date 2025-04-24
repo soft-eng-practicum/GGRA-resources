@@ -6,9 +6,9 @@ import { fileURLToPath } from 'url'
 import cors from 'cors'
 
 import gitLoginRouter from './src/routes/github-login.js'
+import gitCommitRouter from './src/routes/github-commit.js'
 
 const app = express()
-const PORT = 3000
 
 // CORS to allow frontend communication
 app.use(
@@ -20,6 +20,8 @@ app.use(
     credentials: true,
   }),
 )
+
+app.use(express.json());
 
 // Session middleware
 app.use(
@@ -38,6 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // GitHub OAuth routes
 app.use('/', gitLoginRouter)
+
+app.use(gitCommitRouter)
 
 // Auth check endpoint for React frontend
 app.get('/api/check-auth', (req, res) => {

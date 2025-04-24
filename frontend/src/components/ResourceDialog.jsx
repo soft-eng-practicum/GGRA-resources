@@ -114,8 +114,20 @@ function ResourceDialog() {
     },
   })
 
-  function onSubmit(values) {
-    console.log(values)
+  async function onSubmit(values) {
+    const res = await fetch('http://localhost:3000/api/resources', { //TODO: Change localhost to server URL once in prod
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values),
+    })
+    if (res.ok) {
+      //TODO: do something if push succeeds
+    } else if (res.status === 409) {
+      //TODO: do something if there's a push conflict
+    } else {
+      //TODO: show possible error
+    }
   }
 
   return (
