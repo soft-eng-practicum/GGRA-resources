@@ -250,5 +250,9 @@
     "lat": "11.1111",
     "uploadedPhoto": null,
     "cat": null
+  },
+  {
+    "id": 36,
+    "catId": "12"
   }
 ]
