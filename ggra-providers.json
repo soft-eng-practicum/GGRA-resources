@@ -214,45 +214,5 @@
     "lat": "33.906461",
     "uploadedPhoto": null,
     "cat": null
-  },
-  {
-    "id": 34,
-    "catId": 5,
-    "name": "Thorough Test",
-    "description": "Lorem Ipsum sic dolor sit amet",
-    "street": "1234 Nonesuch Road",
-    "city": "Nulltown",
-    "state": "AT",
-    "zip": "12345",
-    "phone": "0000000000",
-    "website": "example.com",
-    "email": "placeholder@example.com",
-    "photo": null,
-    "lng": "11.1111",
-    "lat": "11.1111",
-    "uploadedPhoto": null,
-    "cat": null
-  },
-  {
-    "id": 35,
-    "catId": 1,
-    "name": "Test",
-    "description": "",
-    "street": "",
-    "city": "",
-    "state": "",
-    "zip": "",
-    "phone": "",
-    "website": "",
-    "email": "",
-    "photo": null,
-    "lng": "11.1111",
-    "lat": "11.1111",
-    "uploadedPhoto": null,
-    "cat": null
-  },
-  {
-    "id": 36,
-    "catId": "12"
   }
 ]
