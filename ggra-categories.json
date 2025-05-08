@@ -42,5 +42,9 @@
   {
     "catId": "13",
     "type": "test2"
+  },
+  {
+    "catId": 14,
+    "type": "testNumber"
   }
 ]
