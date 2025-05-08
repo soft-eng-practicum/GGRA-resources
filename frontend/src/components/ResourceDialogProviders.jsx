@@ -57,8 +57,8 @@ const formSchema = z.object({
   phone: z.string(),
   website: z.string(),
   email: z.string(),
-  lng: z.string().min(1, 'Longitude is required'),
-  lat: z.string().min(1, 'Latitude is required'),
+  lng: z.string(),
+  lat: z.string(),
 })
 
 function GGRAFormField({
@@ -135,7 +135,7 @@ function ResourceDialogProviders() {
       cat: null,
     }
 
-    const res = await fetch('http://localhost:3000/api/resources', { //TODO: Change localhost to server URL once in prod
+    const res = await fetch('http://localhost:3000/api/postProvider', { //TODO: Change localhost to server URL once in prod
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

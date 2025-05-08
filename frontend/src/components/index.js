@@ -5,6 +5,8 @@ import ResourceCardCategories from './ResourceCardCategories'
 import GitHubLogin from './GitHubLogin'
 import MapProvider from './MapProvider'
 import Categories from './Categories'
+import ResourceRefresh from './ResourceRefresh'
+import ResourceBox from './ResourceBox'
 
 export {
   ResourceDialogProviders,
@@ -13,5 +15,7 @@ export {
   ResourceCardCategories,
   GitHubLogin,
   MapProvider,
-  Categories
+  Categories,
+  ResourceRefresh,
+  ResourceBox,
 }

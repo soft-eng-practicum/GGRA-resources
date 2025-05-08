@@ -29,7 +29,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
 const formSchema = z.object({
-  catId: z.string().min(1),
+  catId: z.coerce.number(),
   type: z
     .string()
     .min(2, 'Name should be more than 2 characters long')
@@ -86,7 +86,7 @@ function ResourceDialogCategories() {
       type: values.type,
     }
 
-    const res = await fetch('http://localhost:3000/api/resources', { //TODO: Change localhost to server URL once in prod
+    const res = await fetch('http://localhost:3000/api/postCategory', { //TODO: Change localhost to server URL once in prod
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

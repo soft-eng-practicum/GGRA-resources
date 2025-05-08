@@ -8,7 +8,12 @@ function ensureLoggedIn(req, res, next) {
   return res.status(401).json({ error: 'Not signed in' })
 }
 
-router.post('/api/postProvider', ensureLoggedIn, async (req, res) => {
+router.delete('/api/deleteProvider', ensureLoggedIn, async (req, res) => {
+  const { id } = req.body
+  if (typeof id !== 'number') {
+    return res.status(400).json({ error: 'Must specify provider id to delete' })
+  }
+
   try {
     const userToken = req.session.accessToken
     const octokit = new Octokit({ auth: userToken })
@@ -27,31 +32,13 @@ router.post('/api/postProvider', ensureLoggedIn, async (req, res) => {
     const content = Buffer.from(file.content, 'base64').toString('utf8')
     const arr = JSON.parse(content)
 
-    const nextId = arr.reduce((max, r) => Math.max(max, r.id), 0) + 1
-
-    const newProvider = {
-      id: nextId,
-      catId: req.body.catId,
-      name: req.body.name,
-      description: req.body.description,
-      street: req.body.street,
-      city: req.body.city,
-      state: req.body.state,
-      zip: req.body.zip,
-      phone: req.body.phone,
-      website: req.body.website,
-      email: req.body.email,
-      photo: req.body.photo,
-      lng: req.body.lng,
-      lat: req.body.lat,
-      uploadedPhoto: req.body.uploadedPhoto,
-      cat: req.body.cat,
+    const filtered = arr.filter((provider) => provider.id !== id)
+    if (filtered.length === arr.length) {
+      return res.status(404).json({ error: `No provider found with id ${id}` })
     }
 
-    arr.push(newProvider)
-
     const updatedBase64 = Buffer.from(
-      JSON.stringify(arr, null, 2),
+      JSON.stringify(filtered, null, 2),
       'utf8',
     ).toString('base64')
 
@@ -62,18 +49,16 @@ router.post('/api/postProvider', ensureLoggedIn, async (req, res) => {
         repo,
         path: filePath,
         branch,
-        message: `TEST CHORE: add "${req.body.name}" resource provider`,
+        message: `CHORE: delete provider id ${id}`,
         content: updatedBase64,
         sha: file.sha,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
+        headers: { 'X-GitHub-Api-Version': '2022-11-28' },
       },
     )
 
     return res.json({ sha: commit.content.sha })
   } catch (err) {
-    console.error('Error saving resource →', err)
+    console.error('Error deleting provider →', err)
     if (err.status === 409) {
       return res
         .status(409)
@@ -83,7 +68,12 @@ router.post('/api/postProvider', ensureLoggedIn, async (req, res) => {
   }
 })
 
-router.post('/api/postCategory', ensureLoggedIn, async (req, res) => {
+router.delete('/api/deleteCategory', ensureLoggedIn, async (req, res) => {
+  const { catId } = req.body
+  if (typeof catId != 'number') {
+    return res.status(400).json({ error: 'Must specify category ID to delete' })
+  }
+
   try {
     const userToken = req.session.accessToken
     const octokit = new Octokit({ auth: userToken })
@@ -102,15 +92,15 @@ router.post('/api/postCategory', ensureLoggedIn, async (req, res) => {
     const content = Buffer.from(file.content, 'base64').toString('utf8')
     const arr = JSON.parse(content)
 
-    const newCategory = {
-      catId: req.body.catId,
-      type: req.body.type,
+    const filtered = arr.filter((cat) => cat.catId !== catId)
+    if (filtered.length === arr.length) {
+      return res
+        .status(404)
+        .json({ error: `No category found with catId ${catId}` })
     }
 
-    arr.push(newCategory)
-
     const updatedBase64 = Buffer.from(
-      JSON.stringify(arr, null, 2),
+      JSON.stringify(filtered, null, 2),
       'utf8',
     ).toString('base64')
 
@@ -121,18 +111,16 @@ router.post('/api/postCategory', ensureLoggedIn, async (req, res) => {
         repo,
         path: filePath,
         branch,
-        message: `TEST CHORE: add "${req.body.type}" resource category`,
+        message: `CHORE: delete category ${catId}`,
         content: updatedBase64,
         sha: file.sha,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
+        headers: { 'X-GitHub-Api-Version': '2022-11-28' },
       },
     )
 
     return res.json({ sha: commit.content.sha })
   } catch (err) {
-    console.error('Error saving resource →', err)
+    console.error('Error deleting category →', err)
     if (err.status === 409) {
       return res
         .status(409)
