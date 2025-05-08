@@ -214,23 +214,5 @@
     "lat": "33.906461",
     "uploadedPhoto": null,
     "cat": null
-  },
-  {
-    "id": 34,
-    "catId": 1,
-    "name": "DeletionTestProvider",
-    "description": "",
-    "street": "",
-    "city": "",
-    "state": "",
-    "zip": "",
-    "phone": "",
-    "website": "",
-    "email": "",
-    "photo": null,
-    "lng": "",
-    "lat": "",
-    "uploadedPhoto": null,
-    "cat": null
   }
 ]
