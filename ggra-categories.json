@@ -34,17 +34,5 @@
   {
     "catId": 11,
     "type": "Transportation"
-  },
-  {
-    "catId": "12",
-    "type": "test"
-  },
-  {
-    "catId": "13",
-    "type": "test2"
-  },
-  {
-    "catId": 14,
-    "type": "testNumber"
   }
 ]
