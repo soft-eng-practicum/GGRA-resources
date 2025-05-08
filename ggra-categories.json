@@ -34,5 +34,9 @@
   {
     "catId": 11,
     "type": "Transportation"
+  },
+  {
+    "catId": 13,
+    "type": "testdelete2"
   }
 ]
