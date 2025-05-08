@@ -38,5 +38,9 @@
   {
     "catId": "12",
     "type": "test"
+  },
+  {
+    "catId": "13",
+    "type": "test2"
   }
 ]
