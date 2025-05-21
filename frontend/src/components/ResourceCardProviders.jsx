@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { ResourceBox } from '@/components'
+import { ResourceBox, ResourceEditProviderDialog } from '@/components'
 
 function ResourceCardProviders({ items, setItems }) {
+  const [editingItem, setEditingItem] = useState(null)
   const removeItem = async (rawId, index) => {
     const id = Number(rawId)
     try {
@@ -22,31 +24,56 @@ function ResourceCardProviders({ items, setItems }) {
     }
   }
 
+  const onEdit = (item, index) => {
+    setEditingItem({ ...item, index })
+  }
+
+  const onSave = updated => {
+    const { index, ...rest } = updated
+    setItems(prev =>
+      prev.map((it, i) => (i === index ? rest : it))
+    )
+  }
+
+  const onClose = () => setEditingItem(null)
+
   return (
-    <Card className="overflow-y-auto border-none px-6 shadow-none mx-auto">
-      <CardContent className="mb-20">
-        <ul className="space-y-4">
-          {items.map((item, index) => (
-            <li key={item.id}>
-              <ResourceBox
-                name={item.name}
-                description={item.description}
-                street={item.street}
-                city={item.city}
-                state={item.state}
-                zip={item.zip}
-                phone={item.phone}
-                email={item.email}
-                website={item.website}
-                latitude={item.latitude}
-                longitude={item.longitude}
-                onRemove={() => removeItem(item.id, index)}
-              />
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+    <>
+      <Card className="overflow-y-auto border-none px-6 shadow-none mx-auto">
+        <CardContent className="mb-20">
+          <ul className="space-y-4">
+            {items.map((item, index) => (
+              <li key={item.id}>
+                <ResourceBox
+                  name={item.name}
+                  description={item.description}
+                  street={item.street}
+                  city={item.city}
+                  state={item.state}
+                  zip={item.zip}
+                  phone={item.phone}
+                  email={item.email}
+                  website={item.website}
+                  latitude={item.latitude}
+                  longitude={item.longitude}
+                  onRemove={() => removeItem(item.id, index)}
+                  onEdit={() => onEdit(item, index)}
+                />
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+
+      <ResourceEditProviderDialog
+        item={editingItem}
+        onSave={values => {
+          onSave({ ...values, index: editingItem.index })
+          onClose()
+        }}
+        onClose={onClose}
+      />
+    </>
   )
 }
 

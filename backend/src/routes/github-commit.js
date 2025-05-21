@@ -62,7 +62,7 @@ router.post('/api/postProvider', ensureLoggedIn, async (req, res) => {
         repo,
         path: filePath,
         branch,
-        message: `TEST CHORE: add "${req.body.name}" resource provider`,
+        message: `CHORE: add "${req.body.name}" resource provider`,
         content: updatedBase64,
         sha: file.sha,
         headers: {
@@ -121,7 +121,7 @@ router.post('/api/postCategory', ensureLoggedIn, async (req, res) => {
         repo,
         path: filePath,
         branch,
-        message: `TEST CHORE: add "${req.body.type}" resource category`,
+        message: `CHORE: add "${req.body.type}" resource category`,
         content: updatedBase64,
         sha: file.sha,
         headers: {

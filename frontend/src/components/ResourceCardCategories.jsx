@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { ResourceBox } from '@/components'
+import { ResourceBox, ResourceEditCategoryDialog } from '@/components'
 
 function ResourceCardCategories({ items, setItems }) {
+  const [editingItem, setEditingItem] = useState(null)
+
   const removeItem = async (rawCatId, index) => {
     const catId = Number(rawCatId)
     try {
@@ -23,22 +25,44 @@ function ResourceCardCategories({ items, setItems }) {
     }
   }
 
+  const onEdit = (item, index) => {
+    setEditingItem({ ...item, index })
+  }
+
+  const onSave = (newType, index) => {
+    setItems((prev) =>
+      prev.map((it, i) => (i === index ? { ...it, type: newType } : it)),
+    )
+  }
+
   return (
-    <Card className="overflow-y-auto border-none px-6 shadow-none">
-      <CardContent className="mb-20">
-        <ul className="space-y-4">
-          {items.map((item, index) => (
-            <li key={item.catId}>
-              <ResourceBox
-                catId={item.catId}
-                name={item.type}
-                onRemove={() => removeItem(item.catId, index)}
-              />
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+    <>
+      <Card className="overflow-y-auto border-none px-6 shadow-none">
+        <CardContent className="mb-20">
+          <ul className="space-y-4">
+            {items.map((item, index) => (
+              <li key={item.catId}>
+                <ResourceBox
+                  catId={item.catId}
+                  name={item.type}
+                  onRemove={() => removeItem(item.catId, index)}
+                  onEdit={() => onEdit(item, index)}
+                />
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+
+      <ResourceEditCategoryDialog
+        item={editingItem}
+        onSave={(newType) => {
+          onSave(newType, editingItem.index)
+          setEditingItem(null)
+        }}
+        onClose={() => setEditingItem(null)}
+      />
+    </>
   )
 }
 

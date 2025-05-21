@@ -14,6 +14,7 @@ function ResourceBox({
   longitude,
   catId,
   onRemove,
+  onEdit,
 }) {
   return (
     <div className="bg-white relative flex flex-col sm:flex-row md:w-full h-fit border rounded-sm p-5">
@@ -61,7 +62,7 @@ function ResourceBox({
         )}
       </div>
       <div className="flex flex-row sm:flex-col w-full md:w-3/64 items-center ml-2 justify-between sm:justify-center h-auto">
-        <Button className="w-[40px] h-[40px] bg-gray-300 m-2" >
+        <Button className="w-[40px] h-[40px] bg-gray-300 hover:bg-gray-400 m-2" onClick={onEdit} >
           <span className="icon icon-compose-2" />
         </Button>
         <Button className="w-[40px] h-[40px] bg-gray-300 hover:bg-gray-400 m-2" onClick={onRemove}>

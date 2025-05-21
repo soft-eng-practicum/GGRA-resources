@@ -9,6 +9,7 @@ import gitLoginRouter from './src/routes/github-login.js'
 import gitCommitRouter from './src/routes/github-commit.js'
 import gitGetResCatsRouter from './src/routes/github-getrescats.js'
 import gitDelResCatsRouter from './src/routes/github-delrescats.js'
+import gitPutResCatsRouter from './src/routes/github-putrescats.js'
 
 const app = express()
 
@@ -16,8 +17,8 @@ const app = express()
 app.use(
   cors({
     origin: [
-      'http://localhost:5173/GGRA-resources/',
-      'https://soft-eng-practicum.github.io/GGRA-resources/',
+      'http://localhost:5173',
+      'https://.github.io/GGRA-resources/',
     ],
     credentials: true,
   }),
@@ -46,6 +47,7 @@ app.use('/', gitLoginRouter)
 app.use(gitCommitRouter)
 app.use(gitGetResCatsRouter)
 app.use(gitDelResCatsRouter)
+app.use(gitPutResCatsRouter)
 
 // Auth check endpoint for React frontend
 app.get('/api/check-auth', (req, res) => {

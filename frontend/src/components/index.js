@@ -7,6 +7,8 @@ import MapProvider from './MapProvider'
 import Categories from './Categories'
 import ResourceRefresh from './ResourceRefresh'
 import ResourceBox from './ResourceBox'
+import ResourceEditCategoryDialog from './ResourceEditCategoryDialog'
+import ResourceEditProviderDialog from './ResourceEditProviderDialog'
 
 export {
   ResourceDialogProviders,
@@ -18,4 +20,6 @@ export {
   Categories,
   ResourceRefresh,
   ResourceBox,
+  ResourceEditCategoryDialog,
+  ResourceEditProviderDialog,
 }
