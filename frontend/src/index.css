@@ -29,6 +29,8 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-accordion-down: accordion-down 0.2s ease-out;
 
+  --breakpoint-xs: 375px;
+
   @keyframes accordion-down {
     from {
       height: 0;
@@ -123,6 +125,14 @@
   }
 
   .icon-refresh-01::before {
-    content: "\ea04";
+    content: '\ea04';
+  }
+
+  .icon-menu-8::before {
+    content: '\ea05';
+  }
+
+  .icon-menu::before {
+    content: '\ea06';
   }
 }

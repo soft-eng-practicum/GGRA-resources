@@ -42,7 +42,7 @@ const formSchema = z.object({
   zip: z.string(),
   phone: z.string(),
   website: z.string(),
-  email: z.string().email(),
+  email: z.string(),
   lng: z.string(),
   lat: z.string(),
 })
@@ -70,14 +70,15 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
 
   useEffect(() => {
     fetch('http://localhost:3000/api/getCategories', { credentials: 'include' })
-      .then(r => {
+      .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()
       })
-      .then(data => {
-        const raw = typeof data.content === 'string'
-          ? data.content
-          : JSON.stringify(data.content)
+      .then((data) => {
+        const raw =
+          typeof data.content === 'string'
+            ? data.content
+            : JSON.stringify(data.content)
         let parsed = []
         try {
           parsed = JSON.parse(raw)
@@ -86,7 +87,7 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
         }
         setCategories(Array.isArray(parsed) ? parsed : [])
       })
-      .catch(err => console.error('fetch categories failed:', err))
+      .catch((err) => console.error('fetch categories failed:', err))
   }, [])
 
   useEffect(() => {
@@ -103,8 +104,8 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
       phone: item.phone ?? '',
       website: item.website ?? '',
       email: item.email ?? '',
-      lng: item.lng ?? '',
-      lat: item.lat ?? '',
+      lng: item.longitude ?? '',
+      lat: item.latitude ?? '',
     })
   }, [item, form])
 
@@ -130,7 +131,7 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
   }
 
   return (
-    <Sheet open={open} onOpenChange={isOpen => !isOpen && onClose()}>
+    <Sheet open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
       <SheetContent className="bg-gray-50">
         <SheetHeader>
           <SheetTitle>Edit Resource</SheetTitle>
@@ -146,33 +147,42 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
                 control={form.control}
                 name="catId"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Category<span className="text-red-600">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Select
-                        defaultValue={field.value != null ? String(field.value) : ''}
-                        onValueChange={val => field.onChange(Number(val))}
-                      >
-                        <SelectTrigger className="w-56">
-                          <SelectValue placeholder="Select category"/>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {categories.length > 0 ? (
-                            categories.map(cat => (
-                              <SelectItem key={cat.catId} value={String(cat.catId)}>
-                                {cat.type}
-                              </SelectItem>
-                            ))
-                          ) : (
-                            <SelectItem value="">Loading…</SelectItem>
-                          )}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                  <>
+                    <FormItem>
+                      <FormLabel>
+                        Category<span className="text-red-600">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Select
+                          defaultValue={
+                            field.value != null ? String(field.value) : ''
+                          }
+                          onValueChange={(val) => field.onChange(Number(val))}
+                        >
+                          <SelectTrigger className="w-56">
+                            <SelectValue placeholder="Select category" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-gray-50">
+                            {categories.length > 0 ? (
+                              categories.map((cat) => (
+                                <SelectItem
+                                  className="hover:bg-gray-100"
+                                  key={cat.catId}
+                                  value={String(cat.catId)}
+                                >
+                                  {cat.type}
+                                </SelectItem>
+                              ))
+                            ) : (
+                              <SelectItem value="">Loading…</SelectItem>
+                            )}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                    <br />
+                  </>
                 )}
               />
 
@@ -194,17 +204,20 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
                   control={form.control}
                   name={name}
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{label}</FormLabel>
-                      <FormControl>
-                        {isTextarea ? (
-                          <Textarea {...field} value={field.value ?? ''} />
-                        ) : (
-                          <Input {...field} value={field.value ?? ''} />
-                        )}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+                    <>
+                      <FormItem>
+                        <FormLabel>{label}</FormLabel>
+                        <FormControl>
+                          {isTextarea ? (
+                            <Textarea {...field} value={field.value ?? ''} />
+                          ) : (
+                            <Input {...field} value={field.value ?? ''} />
+                          )}
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                      <br />
+                    </>
                   )}
                 />
               ))}
@@ -213,11 +226,20 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
         </div>
 
         <SheetFooter>
-          <Button type="submit" form="editResourceForm">
+          <Button
+            className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5"
+            type="submit"
+            form="editResourceForm"
+          >
             Save
           </Button>
           <SheetClose asChild>
-            <Button variant="ghost">Cancel</Button>
+            <Button
+              className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5"
+              variant="ghost"
+            >
+              Cancel
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

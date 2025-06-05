@@ -41,7 +41,7 @@ const formSchema = z.object({
   zip: z.string(),
   phone: z.string(),
   website: z.string(),
-  email: z.string().email(),
+  email: z.string(),
   lng: z.string(),
   lat: z.string(),
 })

@@ -28,11 +28,9 @@ function ResourceCardProviders({ items, setItems }) {
     setEditingItem({ ...item, index })
   }
 
-  const onSave = updated => {
+  const onSave = (updated) => {
     const { index, ...rest } = updated
-    setItems(prev =>
-      prev.map((it, i) => (i === index ? rest : it))
-    )
+    setItems((prev) => prev.map((it, i) => (i === index ? rest : it)))
   }
 
   const onClose = () => setEditingItem(null)
@@ -43,23 +41,24 @@ function ResourceCardProviders({ items, setItems }) {
         <CardContent className="mb-20">
           <ul className="space-y-4">
             {items.map((item, index) => (
-              <li key={item.id}>
-                <ResourceBox
-                  name={item.name}
-                  description={item.description}
-                  street={item.street}
-                  city={item.city}
-                  state={item.state}
-                  zip={item.zip}
-                  phone={item.phone}
-                  email={item.email}
-                  website={item.website}
-                  latitude={item.latitude}
-                  longitude={item.longitude}
-                  onRemove={() => removeItem(item.id, index)}
-                  onEdit={() => onEdit(item, index)}
-                />
-              </li>
+              <ResourceBox
+                key={item.id}
+                id={item.id}
+                catId={item.catId}
+                name={item.name}
+                description={item.description}
+                street={item.street}
+                city={item.city}
+                state={item.state}
+                zip={item.zip}
+                phone={item.phone}
+                email={item.email}
+                website={item.website}
+                latitude={item.latitude}
+                longitude={item.longitude}
+                onRemove={() => removeItem(item.id, index)}
+                onEdit={() => onEdit(item, index)}
+              />
             ))}
           </ul>
         </CardContent>
@@ -67,7 +66,7 @@ function ResourceCardProviders({ items, setItems }) {
 
       <ResourceEditProviderDialog
         item={editingItem}
-        onSave={values => {
+        onSave={(values) => {
           onSave({ ...values, index: editingItem.index })
           onClose()
         }}

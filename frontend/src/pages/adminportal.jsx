@@ -31,6 +31,7 @@ function DynamicList() {
 
         setProviderItems(
           providerList.map((item) => ({
+            catId: item.catId,
             id: item.id,
             name: item.name,
             description: item.description,
@@ -85,7 +86,11 @@ function DynamicList() {
             endpoint="getProviders"
           />
         </div>
-        <ResourceCardProviders className="bg-white overflow-y-auto" setItems={setProviderItems} items={providerItems} />
+        <ResourceCardProviders
+          className="bg-white overflow-y-auto"
+          setItems={setProviderItems}
+          items={providerItems}
+        />
         <ResourceDialogProviders />
       </div>
     </div>

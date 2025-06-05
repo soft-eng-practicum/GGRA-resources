@@ -15,6 +15,8 @@ function ResourceRefresh ({ setItems, endpoint }) {
         const mapped = list.map((item) => {
           if (endpoint === 'getProviders') {
             return {
+              id: item.id,
+              catId: item.catId,
               name: item.name,
               description: item.description,
               street: item.street,
