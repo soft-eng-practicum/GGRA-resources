@@ -21,8 +21,6 @@ router.get('/api/getProviders', async (req, res) => {
 
     const content = Buffer.from(file.content, 'base64').toString('utf8')
 
-    console.log(content)
-
     return res.json({ content })
   } catch (err) {
     console.error('Error getting providers', err)
@@ -47,8 +45,6 @@ router.get('/api/getCategories', async(req, res) => {
     })
 
     const content = Buffer.from(file.content, 'base64').toString('utf8')
-
-    console.log(content)
 
     return res.json({ content })
   } catch (err) {
