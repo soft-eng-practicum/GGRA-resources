@@ -19,7 +19,6 @@ function ResourceBox({
   onEdit,
 }) {
   const [categoriesList, setCategoriesList] = useState([])
-  const [categoryName, setCategoryName] = useState('')
 
   useEffect(() => {
     fetch('http://localhost:3000/api/getCategories')
@@ -36,15 +35,6 @@ function ResourceBox({
       })
   }, [])
 
-  useEffect(() => {
-    if (!categoriesList.length) {
-      setCategoryName('')
-      return
-    }
-    const found = categoriesList.find((c) => c.catId === catId)
-    setCategoryName(found ? found.type : 'Unknown')
-  }, [categoriesList, catId])
-
   return (
     <div className="bg-white relative flex flex-col sm:flex-row md:w-full h-fit border rounded-sm p-5">
       <div className="p-4 w-full md:w-61/64">
@@ -53,9 +43,6 @@ function ResourceBox({
             <p className="font-bold text-lg">
               {name}
               <br />
-              <span className="text-base font-medium text-gray-700">
-                {categoryName || 'Loading Category...'}
-              </span>
             </p>
             <hr />
             <br />
