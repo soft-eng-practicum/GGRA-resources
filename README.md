@@ -16,6 +16,7 @@ All available features:
 - Editing existing Category/Provider (Pencil Button)
 - Deleting Category/Provider (Red Trashcan Button)
 - Refresh Category/Provider (Circle Arrow button)
+
 Any action taken here is final and cannot be reverted. Be sure to be careful when clicking and double-check any information.
 
 Be aware that due to cost restraints you should not spam click any buttons in the Admin Portal, doing so can make the site fail to load due to GitHub and Heroku (the hosting solution) restricting communication between servers.
