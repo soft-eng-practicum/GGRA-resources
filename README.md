@@ -3,6 +3,8 @@ This is the new version for the GGRA's Resource Map, fully written in React.js a
 # Getting Started
 
 ## Administrator/Contributor
+**Anyone who wishes to edit the list of Categories/Providers must have a GitHub account and be added as a contributor to this repository.**
+
 ### Generic Usage
 Head to https://soft-eng-practicum.github.io/GGRA-resources/
 
