@@ -18,6 +18,7 @@ All available features:
 - Refresh Category/Provider (Circle Arrow button)
 
 Be aware that due to cost restraints you should not spam click any buttons in the Admin Portal, doing so can make the site fail to load due to GitHub and Heroku (the hosting solution) restricting communication between servers.
+
 **A single click is enough, the website will work**
 
 ### Information about Longitude, Latitude and Markers
