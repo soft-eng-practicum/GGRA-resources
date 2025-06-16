@@ -5,10 +5,12 @@ This is the new version for the GGRA's Resource Map, fully written in React.js a
 ## Administrator/Contributor
 ### Generic Usage
 Head to https://soft-eng-practicum.github.io/GGRA-resources/
+
 You will see an interactable map on which you can click the markers to show information about them. You can also click on various categories on the sidebar to then see what providers offer said category of services.
 
 ### Editing the Category/Provider List
 In the bottom left of the sidebar you should see a blue button with a GitHub logo on it. Clicking this button will take you to the admin portal and will authenticate you through GitHub. Once logged in and authenticated you should be redirected to the admin portal. You can do plenty of things to edit your list of Categories and Providers here.
+
 All available features:
 - Creating new Category/Provider (Green Plus Button)
 - Editing existing Category/Provider (Pencil Button)
