@@ -1,5 +1,3 @@
-# GGRA-resources
-
 This is the new version for the GGRA's Resource Map, fully written in React.js and Express.js.
 
 # Getting Started
