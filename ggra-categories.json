@@ -34,9 +34,5 @@
   {
     "catId": 11,
     "type": "Transportation"
-  },
-  {
-    "catId": 12,
-    "type": "notif test"
   }
 ]
