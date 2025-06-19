@@ -69,7 +69,10 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
   })
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/getCategories', { credentials: 'include' })
+    fetch(
+      'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/getCategories',
+      { credentials: 'include' },
+    )
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()
@@ -113,12 +116,15 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
 
   async function onSubmit(values) {
     try {
-      const res = await fetch('http://localhost:3000/api/editProvider', {
-        method: 'PUT',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-      })
+      const res = await fetch(
+        'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/editProvider',
+        {
+          method: 'PUT',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(values),
+        },
+      )
       if (res.ok) {
         onSave(values)
         onClose()

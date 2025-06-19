@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 function ResourceRefresh ({ setItems, endpoint }) {
 
   const fetchResources = () => {
-    fetch(`http://localhost:3000/api/${endpoint}`)
+    fetch(`https://ggra-resources-5f06c5a981f6.herokuapp.com/api/${endpoint}`)
       .then((res) => {
         if (!res.ok) throw new Error(res.statusText)
         return res.json()

@@ -103,7 +103,7 @@ export default function ResourceDialogProviders() {
   })
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/getCategories', { credentials: 'include' })
+    fetch('api/getCategories', { credentials: 'include' })
       .then((response) => {
         if (!response.ok) throw new Error(`Error ${response.status}`)
         return response.json()
@@ -139,12 +139,15 @@ export default function ResourceDialogProviders() {
       cat: null,
     }
 
-    await fetch('http://localhost:3000/api/postProvider', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
+    await fetch(
+      'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/postProvider',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      },
+    )
     // TODO: handle success, conflict, error
   }
 

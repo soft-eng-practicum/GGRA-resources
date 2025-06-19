@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ResourceBox, ResourceEditCategoryDialog } from '@/components'
 
-function ResourceCardCategories({ items, setItems }) {
+function ResourceCardCategories({ items, setItems, categoriesList }) {
   const [editingItem, setEditingItem] = useState(null)
 
   const removeItem = async (rawCatId, index) => {
     const catId = Number(rawCatId)
     try {
-      const resp = await fetch('http://localhost:3000/api/deleteCategory', {
+      const resp = await fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/deleteCategory', {
         method: 'DELETE',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -47,6 +47,7 @@ function ResourceCardCategories({ items, setItems }) {
                   name={item.type}
                   onRemove={() => removeItem(item.catId, index)}
                   onEdit={() => onEdit(item, index)}
+                  categoriesList={categoriesList}
                 />
               </li>
             ))}

@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ResourceBox, ResourceEditProviderDialog } from '@/components'
 
-function ResourceCardProviders({ items, setItems }) {
+function ResourceCardProviders({ items, setItems, categoriesList }) {
   const [editingItem, setEditingItem] = useState(null)
+
   const removeItem = async (rawId, index) => {
     const id = Number(rawId)
     try {
-      const resp = await fetch('http://localhost:3000/api/deleteProvider', {
+      const resp = await fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/deleteProvider', {
         method: 'DELETE',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -58,6 +59,7 @@ function ResourceCardProviders({ items, setItems }) {
                 longitude={item.longitude}
                 onRemove={() => removeItem(item.id, index)}
                 onEdit={() => onEdit(item, index)}
+                categoriesList={categoriesList}
               />
             ))}
           </ul>

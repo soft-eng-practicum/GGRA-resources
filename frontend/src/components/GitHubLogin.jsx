@@ -3,7 +3,7 @@ import IonIcon from '@reacticons/ionicons'
 
 function GitHubLogin() {
   const handleLogin = () => {
-    window.location.href = 'http://localhost:3000/auth/github'
+    window.location.href = 'https://ggra-resources-5f06c5a981f6.herokuapp.com/auth/github'
   }
 
   return (

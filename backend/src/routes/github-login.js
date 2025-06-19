@@ -61,7 +61,7 @@ router.get('/github/callback', async (req, res) => {
     req.session.accessToken = accessToken
     req.session.username = user.login
 
-    res.redirect('http://localhost:5173/GGRA-resources/admin')
+    res.redirect('https://soft-eng-practicum.github.io/GGRA-resources/#/admin')
   } catch (err) {
     console.error('Authentication error:', err.message)
     res.redirect('/access-denied')

@@ -8,7 +8,7 @@ function ProtectedRoute({ children }) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3000/api/check-auth', { withCredentials: true })
+      .get('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/check-auth', { withCredentials: true })
       .then((res) => {
         if (res.data.authenticated) {
           setIsAuthenticated(true)
@@ -25,7 +25,7 @@ function ProtectedRoute({ children }) {
 
   if (!isAuthenticated) {
     // Redirect to backend login (GitHub OAuth)
-    window.location.href = 'http://localhost:3000/auth/github'
+    window.location.href = 'https://ggra-resources-5f06c5a981f6.herokuapp.com/auth/github'
     return null
   }
 

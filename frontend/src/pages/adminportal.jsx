@@ -16,8 +16,12 @@ function DynamicList() {
     const fetchAllData = async () => {
       try {
         const [providersRes, categoriesRes] = await Promise.all([
-          fetch('http://localhost:3000/api/getProviders'),
-          fetch('http://localhost:3000/api/getCategories'),
+          fetch(
+            'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/getProviders',
+          ),
+          fetch(
+            'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/getCategories',
+          ),
         ])
 
         if (!providersRes.ok || !categoriesRes.ok)
@@ -90,6 +94,7 @@ function DynamicList() {
           className="bg-white overflow-y-auto"
           setItems={setProviderItems}
           items={providerItems}
+          categoriesList={categoryItems}
         />
         <ResourceDialogProviders />
       </div>

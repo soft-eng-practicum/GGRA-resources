@@ -43,7 +43,7 @@ export default function ResourceEditCategoryDialog({ item, onSave, onClose }) {
 
   async function onSubmit(values) {
     try {
-      const resp = await fetch('http://localhost:3000/api/editCategory', {
+      const resp = await fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/editCategory', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

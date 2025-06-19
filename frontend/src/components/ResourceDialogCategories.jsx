@@ -80,18 +80,20 @@ function ResourceDialogCategories() {
   })
 
   async function onSubmit(values) {
-
     const payload = {
       catId: values.catId,
       type: values.type,
     }
 
-    const res = await fetch('http://localhost:3000/api/postCategory', { //TODO: Change localhost to server URL once in prod
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
+    const res = await fetch(
+      'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/postCategory',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      },
+    )
 
     if (res.ok) {
       //TODO: do something if push succeeds

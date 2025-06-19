@@ -12,13 +12,16 @@ import gitDelResCatsRouter from './src/routes/github-delrescats.js'
 import gitPutResCatsRouter from './src/routes/github-putrescats.js'
 
 const app = express()
+const PORT = process.env.PORT || 3000
+
+app.set('trust proxy', 1)
 
 // CORS to allow frontend communication
 app.use(
   cors({
     origin: [
       'http://localhost:5173',
-      'https://.github.io/GGRA-resources/',
+      'https://soft-eng-practicum.github.io',
     ],
     credentials: true,
   }),
@@ -32,7 +35,10 @@ app.use(
     secret: process.env.SESSION_SECRET || 'dev-secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }, // Set to true in production with HTTPS
+    cookie: {
+      secure: true,
+      sameSite: 'none',
+    },
   }),
 )
 
@@ -58,10 +64,10 @@ app.get('/api/check-auth', (req, res) => {
 app.get('/access-denied', (req, res) => {
   const isDev = process.env.NODE_ENV !== 'production'
   const redirectURL = isDev
-    ? 'http://localhost:5173/GGRA-resources/forbidden'
-    : 'https://soft-eng-practicum.github.io/GGRA-resources/forbidden'
+    ? 'http://localhost:5173/GGRA-resources/#/forbidden'
+    : 'https://soft-eng-practicum.github.io/GGRA-resources/#/forbidden'
 
   res.redirect(redirectURL)
 })
 
-app.listen(3000)
+app.listen(PORT)
