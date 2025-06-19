@@ -109,7 +109,6 @@ export default function ResourceDialogProviders() {
         return response.json()
       })
       .then((data) => {
-        // data.content is the raw JSON string from backend
         const raw =
           typeof data.content === 'string'
             ? data.content
@@ -148,7 +147,6 @@ export default function ResourceDialogProviders() {
         body: JSON.stringify(payload),
       },
     )
-    // TODO: handle success, conflict, error
   }
 
   return (
@@ -170,7 +168,7 @@ export default function ResourceDialogProviders() {
                 name="catId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
+                    <FormLabel className="text-md">
                       Category<span className="text-red-600">*</span>
                     </FormLabel>
                     <FormControl>
@@ -200,6 +198,7 @@ export default function ResourceDialogProviders() {
                   </FormItem>
                 )}
               />
+              <br />
 
               <GGRAFormField
                 form={form.control}
@@ -208,6 +207,8 @@ export default function ResourceDialogProviders() {
                 isRequired
                 placeholder="Example Resource"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="description"
@@ -215,48 +216,64 @@ export default function ResourceDialogProviders() {
                 labelName="Description"
                 placeholder="Enter description"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="street"
                 labelName="Street Address"
                 placeholder="1234 Nonesuch Road"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="city"
                 labelName="City"
                 placeholder="Anytown"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="state"
                 labelName="State"
                 placeholder="GA"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="zip"
                 labelName="Zip Code"
                 placeholder="12345"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="phone"
                 labelName="Phone Number"
                 placeholder="(123) 123-1234"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="website"
                 labelName="Website"
                 placeholder="https://example.com"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="email"
                 labelName="E-Mail"
                 placeholder="you@example.com"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="lng"
@@ -264,6 +281,8 @@ export default function ResourceDialogProviders() {
                 isRequired
                 placeholder="-12.1234"
               />
+              <br />
+
               <GGRAFormField
                 form={form.control}
                 name="lat"
