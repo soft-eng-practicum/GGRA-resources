@@ -214,5 +214,23 @@
     "lat": "33.906461",
     "uploadedPhoto": null,
     "cat": null
+  },
+  {
+    "id": 13,
+    "catId": 2,
+    "name": "Test",
+    "description": "",
+    "street": "",
+    "city": "",
+    "state": "",
+    "zip": "",
+    "phone": "",
+    "website": "",
+    "email": "",
+    "photo": null,
+    "lng": "",
+    "lat": "",
+    "uploadedPhoto": null,
+    "cat": null
   }
 ]
