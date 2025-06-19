@@ -103,7 +103,7 @@ export default function ResourceDialogProviders() {
   })
 
   useEffect(() => {
-    fetch('api/getCategories', { credentials: 'include' })
+    fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/getCategories', { credentials: 'include' })
       .then((response) => {
         if (!response.ok) throw new Error(`Error ${response.status}`)
         return response.json()
