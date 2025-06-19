@@ -48,7 +48,7 @@ function ResourceBox({
             <p className="font-bold text-lg">{name}<br /></p>
             <hr /><br />
             <p className="font-bold text-md text-gray-500">
-              Category: {
+              Category {
                 categoriesList?.find((cat) => cat.catId === catId)?.type || `ID: ${catId}`
               }
             </p>
