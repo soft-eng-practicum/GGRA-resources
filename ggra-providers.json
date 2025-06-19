@@ -304,5 +304,23 @@
     "lat": "25.25499",
     "uploadedPhoto": null,
     "cat": null
+  },
+  {
+    "id": 18,
+    "catId": 4,
+    "name": "test location",
+    "description": "something",
+    "street": "2122 Clairmont Rd",
+    "city": "Atlanta",
+    "state": "GA",
+    "zip": "30030",
+    "phone": "111",
+    "website": "",
+    "email": "",
+    "photo": null,
+    "lng": "41.27065",
+    "lat": "25.25499",
+    "uploadedPhoto": null,
+    "cat": null
   }
 ]
