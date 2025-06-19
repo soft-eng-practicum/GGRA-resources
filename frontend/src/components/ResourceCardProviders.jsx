@@ -8,20 +8,26 @@ function ResourceCardProviders({ items, setItems, categoriesList }) {
   const removeItem = async (rawId, index) => {
     const id = Number(rawId)
     try {
-      const resp = await fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/deleteProvider', {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      })
+      const resp = await fetch(
+        'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/deleteProvider',
+        {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id }),
+        }
+      )
       if (!resp.ok) {
         const err = await resp.json()
         console.error('Failed to delete:', err.error || resp.statusText)
+        alert(`Delete failed: ${err.error || resp.statusText}`)
         return
       }
       setItems((prev) => prev.filter((_, i) => i !== index))
+      alert('Provider deleted successfully')
     } catch (e) {
       console.error('Network error deleting provider:', e)
+      alert('Network error deleting provider')
     }
   }
 

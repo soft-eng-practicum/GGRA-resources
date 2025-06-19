@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -12,95 +11,53 @@ import {
   SheetTitle,
   SheetFooter,
   SheetTrigger,
-  SheetClose,
 } from '@/components/ui/sheet'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 
 const formSchema = z.object({
-  catId: z.coerce.number(),
-  type: z
-    .string()
-    .min(2, 'Name should be more than 2 characters long')
-    .max(50, 'Name should be less than 50 characters long'),
+  catId: z.coerce.number().min(1, 'Must be at least 1'),
+  type: z.string().min(2).max(50),
 })
 
-function GGRAFormField({
-  form,
-  name,
-  labelName,
-  textarea,
-  placeholder,
-  description,
-  isRequired,
-}) {
-  return (
-    <FormField
-      control={form}
-      name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel className="text-md">
-            {labelName}
-            {isRequired && <span className="text-red-600">*</span>}
-          </FormLabel>
-          <FormControl>
-            {!textarea ? (
-              <Input placeholder={placeholder} {...field} />
-            ) : (
-              <Textarea placeholder={placeholder} {...field} />
-            )}
-          </FormControl>
-          {description && <FormDescription>{description}</FormDescription>}
-          <FormMessage className="text-red-600" />
-        </FormItem>
-      )}
-    />
-  )
-}
-
-function ResourceDialogCategories() {
+export default function ResourceDialogCategories() {
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      catId: '',
-      type: '',
-    },
+    defaultValues: { catId: '', type: '' },
   })
 
   async function onSubmit(values) {
-    const payload = {
-      catId: values.catId,
-      type: values.type,
-    }
+    const payload = { catId: values.catId, type: values.type }
+    try {
+      const res = await fetch(
+        'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/postCategory',
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        },
+      )
 
-    const res = await fetch(
-      'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/postCategory',
-      {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      },
-    )
-
-    if (res.ok) {
-      //TODO: do something if push succeeds
-    } else if (res.status === 409) {
-      //TODO: do something if there's a push conflict
-    } else {
-      //TODO: show possible error
+      if (res.ok) {
+        alert('Category created successfully')
+        form.reset()
+      } else if (res.status === 409) {
+        alert('Category ID already exists')
+      } else {
+        alert(`Error creating category: ${res.status}`)
+      }
+    } catch (err) {
+      console.error('submit category failed:', err)
+      alert('Submission failed')
     }
   }
 
@@ -117,28 +74,45 @@ function ResourceDialogCategories() {
             are done.
           </SheetDescription>
         </SheetHeader>
+
         <div className="overflow-y-scroll px-5">
           <Form {...form}>
             <form id="categoryForm" onSubmit={form.handleSubmit(onSubmit)}>
-              <GGRAFormField
-                form={form.control}
+              <FormField
+                control={form.control}
                 name="catId"
-                labelName="CategoryID"
-                isRequired={true}
-                placeholder="9"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Category ID<span className="text-red-600">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="9" {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-600" />
+                  </FormItem>
+                )}
               />
               <br />
-              <GGRAFormField
-                form={form.control}
+              <FormField
+                control={form.control}
                 name="type"
-                textarea={true}
-                labelName="Name"
-                placeholder="Enter Name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Name<span className="text-red-600">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Name" {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-600" />
+                  </FormItem>
+                )}
               />
-              <br />
             </form>
           </Form>
         </div>
+
         <SheetFooter>
           <Button
             type="submit"
@@ -152,5 +126,3 @@ function ResourceDialogCategories() {
     </Sheet>
   )
 }
-
-export default ResourceDialogCategories

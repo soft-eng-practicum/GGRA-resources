@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ResourceBox, ResourceEditCategoryDialog } from '@/components'
 
@@ -8,20 +8,26 @@ function ResourceCardCategories({ items, setItems, categoriesList }) {
   const removeItem = async (rawCatId, index) => {
     const catId = Number(rawCatId)
     try {
-      const resp = await fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/deleteCategory', {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ catId }),
-      })
+      const resp = await fetch(
+        'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/deleteCategory',
+        {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ catId }),
+        }
+      )
       if (!resp.ok) {
         const err = await resp.json()
         console.error('Failed to delete:', err.error || resp.statusText)
+        alert(`Delete failed: ${err.error || resp.statusText}`)
         return
       }
       setItems((prev) => prev.filter((_, i) => i !== index))
+      alert('Category deleted successfully')
     } catch (e) {
       console.error('Network error deleting category:', e)
+      alert('Network error deleting category')
     }
   }
 
@@ -31,7 +37,7 @@ function ResourceCardCategories({ items, setItems, categoriesList }) {
 
   const onSave = (newType, index) => {
     setItems((prev) =>
-      prev.map((it, i) => (i === index ? { ...it, type: newType } : it)),
+      prev.map((it, i) => (i === index ? { ...it, type: newType } : it))
     )
   }
 

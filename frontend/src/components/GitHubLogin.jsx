@@ -1,9 +1,12 @@
 import React from 'react'
 import IonIcon from '@reacticons/ionicons'
+import { useNavigate } from 'react-router-dom'
 
 function GitHubLogin() {
+  const navigate = useNavigate()
+
   const handleLogin = () => {
-    window.location.href = 'https://ggra-resources-5f06c5a981f6.herokuapp.com/auth/github'
+    navigate('/loading')
   }
 
   return (

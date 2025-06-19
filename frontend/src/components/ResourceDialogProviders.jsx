@@ -46,15 +46,7 @@ const formSchema = z.object({
   lat: z.string(),
 })
 
-function GGRAFormField({
-  form,
-  name,
-  labelName,
-  textarea,
-  placeholder,
-  description,
-  isRequired,
-}) {
+function GGRAFormField({ form, name, labelName, textarea, placeholder, description, isRequired }) {
   return (
     <FormField
       control={form}
@@ -72,9 +64,7 @@ function GGRAFormField({
               <Textarea placeholder={placeholder} {...field} />
             )}
           </FormControl>
-          {description && (
-            <div className="text-sm text-gray-500">{description}</div>
-          )}
+          {description && <div className="text-sm text-gray-500">{description}</div>}
           <FormMessage className="text-red-600" />
         </FormItem>
       )}
@@ -103,16 +93,15 @@ export default function ResourceDialogProviders() {
   })
 
   useEffect(() => {
-    fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/getCategories', { credentials: 'include' })
+    fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/getCategories', {
+      credentials: 'include',
+    })
       .then((response) => {
         if (!response.ok) throw new Error(`Error ${response.status}`)
         return response.json()
       })
       .then((data) => {
-        const raw =
-          typeof data.content === 'string'
-            ? data.content
-            : JSON.stringify(data.content)
+        const raw = typeof data.content === 'string' ? data.content : JSON.stringify(data.content)
         let parsed
         try {
           parsed = JSON.parse(raw)
@@ -122,8 +111,8 @@ export default function ResourceDialogProviders() {
         const cats = Array.isArray(parsed)
           ? parsed
           : parsed.content
-            ? parsed.content
-            : []
+          ? parsed.content
+          : []
         setCategories(cats)
       })
       .catch((err) => console.error('fetch categories failed:', err))
@@ -137,16 +126,23 @@ export default function ResourceDialogProviders() {
       uploadedPhoto: null,
       cat: null,
     }
-
-    await fetch(
-      'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/postProvider',
-      {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      },
-    )
+    try {
+      const res = await fetch(
+        'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/postProvider',
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }
+      )
+      if (!res.ok) throw new Error(`Error ${res.status}`)
+      alert('Resource submitted successfully')
+      form.reset()
+    } catch (err) {
+      console.error('submit provider failed:', err)
+      alert('Submission failed')
+    }
   }
 
   return (
@@ -173,9 +169,7 @@ export default function ResourceDialogProviders() {
                     </FormLabel>
                     <FormControl>
                       <Select
-                        defaultValue={
-                          field.value != null ? String(field.value) : ''
-                        }
+                        defaultValue={field.value != null ? String(field.value) : ''}
                         onValueChange={(value) => field.onChange(Number(value))}
                       >
                         <SelectTrigger className="w-56">
@@ -183,11 +177,7 @@ export default function ResourceDialogProviders() {
                         </SelectTrigger>
                         <SelectContent className="bg-gray-50">
                           {categories.map((cat) => (
-                            <SelectItem
-                              className="hover:bg-gray-100"
-                              key={cat.catId}
-                              value={String(cat.catId)}
-                            >
+                            <SelectItem className="hover:bg-gray-100" key={cat.catId} value={String(cat.catId)}>
                               {cat.type}
                             </SelectItem>
                           ))}
@@ -199,107 +189,33 @@ export default function ResourceDialogProviders() {
                 )}
               />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="name"
-                labelName="Name"
-                isRequired
-                placeholder="Example Resource"
-              />
+              <GGRAFormField form={form.control} name="name" labelName="Name" isRequired placeholder="Example Resource" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="description"
-                textarea
-                labelName="Description"
-                placeholder="Enter description"
-              />
+              <GGRAFormField form={form.control} name="description" textarea labelName="Description" placeholder="Enter description" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="street"
-                labelName="Street Address"
-                placeholder="1234 Nonesuch Road"
-              />
+              <GGRAFormField form={form.control} name="street" labelName="Street Address" placeholder="1234 Nonesuch Road" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="city"
-                labelName="City"
-                placeholder="Anytown"
-              />
+              <GGRAFormField form={form.control} name="city" labelName="City" placeholder="Anytown" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="state"
-                labelName="State"
-                placeholder="GA"
-              />
+              <GGRAFormField form={form.control} name="state" labelName="State" placeholder="GA" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="zip"
-                labelName="Zip Code"
-                placeholder="12345"
-              />
+              <GGRAFormField form={form.control} name="zip" labelName="Zip Code" placeholder="12345" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="phone"
-                labelName="Phone Number"
-                placeholder="(123) 123-1234"
-              />
+              <GGRAFormField form={form.control} name="phone" labelName="Phone Number" placeholder="(123) 123-1234" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="website"
-                labelName="Website"
-                placeholder="https://example.com"
-              />
+              <GGRAFormField form={form.control} name="website" labelName="Website" placeholder="https://example.com" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="email"
-                labelName="E-Mail"
-                placeholder="you@example.com"
-              />
+              <GGRAFormField form={form.control} name="email" labelName="E-Mail" placeholder="you@example.com" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="lng"
-                labelName="Longitude"
-                isRequired
-                placeholder="-12.1234"
-              />
+              <GGRAFormField form={form.control} name="lng" labelName="Longitude" isRequired placeholder="-12.1234" />
               <br />
-
-              <GGRAFormField
-                form={form.control}
-                name="lat"
-                labelName="Latitude"
-                isRequired
-                placeholder="43.4321"
-              />
+              <GGRAFormField form={form.control} name="lat" labelName="Latitude" isRequired placeholder="43.4321" />
             </form>
           </Form>
         </div>
 
         <SheetFooter>
-          <Button
-            type="submit"
-            form="resourceForm"
-            className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5"
-          >
+          <Button type="submit" form="resourceForm" className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5">
             Submit
           </Button>
         </SheetFooter>

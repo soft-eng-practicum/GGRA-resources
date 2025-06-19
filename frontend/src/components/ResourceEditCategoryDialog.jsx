@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetDescription,
   SheetFooter,
+  SheetClose,
 } from '@/components/ui/sheet'
 import {
   Form,
@@ -24,7 +25,10 @@ import { Button } from '@/components/ui/button'
 
 const formSchema = z.object({
   catId: z.number(),
-  type: z.string().min(2).max(50),
+  type: z
+    .string()
+    .min(2, 'Name should be at least 2 characters')
+    .max(50, 'Name should be under 50 characters'),
 })
 
 export default function ResourceEditCategoryDialog({ item, onSave, onClose }) {
@@ -43,19 +47,29 @@ export default function ResourceEditCategoryDialog({ item, onSave, onClose }) {
 
   async function onSubmit(values) {
     try {
-      const resp = await fetch('https://ggra-resources-5f06c5a981f6.herokuapp.com/api/editCategory', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(values),
-      })
+      const resp = await fetch(
+        'https://ggra-resources-5f06c5a981f6.herokuapp.com/api/editCategory',
+        {
+          method: 'PUT',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(values),
+        },
+      )
       if (resp.ok) {
+        alert('Category updated successfully')
         onSave(values.type)
+        onClose()
+      } else if (resp.status === 409) {
+        alert('Category ID conflict: that ID already exists')
       } else {
-        console.error('Edit failed', await resp.json())
+        const errorMsg = await resp.text()
+        console.error('Edit failed', errorMsg)
+        alert(`Update failed: ${resp.status}`)
       }
     } catch (e) {
       console.error('Network error', e)
+      alert('Network error during update')
     }
   }
 
@@ -84,7 +98,7 @@ export default function ResourceEditCategoryDialog({ item, onSave, onClose }) {
                     <FormControl>
                       <Input placeholder="New name" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-600" />
                   </FormItem>
                 )}
               />
@@ -93,9 +107,21 @@ export default function ResourceEditCategoryDialog({ item, onSave, onClose }) {
         </div>
 
         <SheetFooter>
-          <Button type="submit" form="editCategoryForm">
+          <Button
+            className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5"
+            type="submit"
+            form="editCategoryForm"
+          >
             Save
           </Button>
+          <SheetClose asChild>
+            <Button
+              className="bg-gray-200 border border-gray-300 hover:bg-gray-300 shadow-lg py-5"
+              variant="ghost"
+            >
+              Cancel
+            </Button>
+          </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>

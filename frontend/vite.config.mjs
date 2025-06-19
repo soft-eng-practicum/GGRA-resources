@@ -5,6 +5,9 @@ import path from "path"
 
 export default defineConfig({
   base: /GGRA-resources/,
+  build: {
+    cssCodeSplit: false,
+  },
   plugins: [
     tailwindcss(),
     react(),

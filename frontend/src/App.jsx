@@ -1,15 +1,19 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
-import IndexMap from './pages/indexMap'
-import DynamicList from './pages/adminportal'
-import Forbidden from './pages/forbidden'
-import ProtectedRoute from './components/ProtectedRoute'
+import React from 'react'
 import './index.css'
+import { HashRouter, Routes, Route } from 'react-router-dom'
+
+import IndexMap        from './pages/indexMap'
+import ServerLoader    from './pages/ServerLoader'
+import DynamicList     from './pages/adminportal'
+import Forbidden       from './pages/forbidden'
+import ProtectedRoute  from './components/ProtectedRoute'
 
 function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<IndexMap />} />
+        <Route path="/"        element={<IndexMap />} />
+        <Route path="/loading" element={<ServerLoader />} />
         <Route
           path="/admin"
           element={

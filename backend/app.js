@@ -10,11 +10,13 @@ import gitCommitRouter from './src/routes/github-commit.js'
 import gitGetResCatsRouter from './src/routes/github-getrescats.js'
 import gitDelResCatsRouter from './src/routes/github-delrescats.js'
 import gitPutResCatsRouter from './src/routes/github-putrescats.js'
+import pingRouter from './src/routes/ping.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 app.set('trust proxy', 1)
+app.set('etag', false)
 
 // CORS to allow frontend communication
 app.use(
@@ -29,23 +31,29 @@ app.use(
 
 app.use(express.json())
 
-// Session middleware
 app.use(
   session({
+    name: 'connect.sid',
     secret: process.env.SESSION_SECRET || 'dev-secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
-      sameSite: 'none',
+      httpOnly: true,           // JS can’t read it
+      secure:   true,           // HTTPS-only (you said production-only)
+      sameSite: 'none',         // allow cross-site
+      maxAge:   24 * 60 * 60 * 1000, // 1 day
     },
-  }),
+  })
 )
 
 // Static files (optional if needed for assets)
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.options('*', cors())
+
+app.use(pingRouter)
 
 // GitHub OAuth routes
 app.use('/', gitLoginRouter)

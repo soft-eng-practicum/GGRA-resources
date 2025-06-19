@@ -126,13 +126,17 @@ export default function ResourceEditProviderDialog({ item, onSave, onClose }) {
         },
       )
       if (res.ok) {
+        alert('Resource updated successfully')
         onSave(values)
         onClose()
       } else {
-        console.error('Edit failed', await res.json())
+        const errMsg = await res.text()
+        console.error('Edit failed', errMsg)
+        alert(`Update failed: ${res.status}`)
       }
     } catch (e) {
       console.error('Network error', e)
+      alert('Network error during update')
     }
   }
 
