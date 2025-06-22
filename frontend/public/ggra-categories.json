@@ -1,0 +1,11 @@
+[
+  { "catId": 1, "type": "Mentoring Services", "resourceProviders": [] },
+  { "catId": 2, "type": "Job Development", "resourceProviders": [] },
+  { "catId": 4, "type": "Government Agencies", "resourceProviders": [] },
+  { "catId": 5, "type": "Probation / Parole", "resourceProviders": [] },
+  { "catId": 6, "type": "Housing Resources", "resourceProviders": [] },
+  { "catId": 7, "type": "Education Mentoring", "resourceProviders": [] },
+  { "catId": 8, "type": "Religious Organizations", "resourceProviders": [] },
+  { "catId": 9, "type": "Healthcare / Recovery", "resourceProviders": [] },
+  { "catId": 11, "type": "Transportation", "resourceProviders": [] }
+]
